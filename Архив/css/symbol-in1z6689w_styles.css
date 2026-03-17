@@ -1,0 +1,6 @@
+@media screen and (not (max-width: 479px)) {.div--u-ii4m6difp {transform: translate3D(0rem, 0px, 0px);}}
+.div--u-iex8wfvwu {grid-row-start: 1; grid-row-end: 1; grid-column-start: 3; grid-column-end: 4;}
+.text--u-is8klt5f8 {grid-column-start: span 3; grid-column-end: span 3;}
+.text--u-iwxjq78ku {grid-column-start: span 2; grid-column-end: span 2;}
+@media (max-width: 991px) {.div--u-iex8wfvwu {grid-row-start: 1; grid-row-end: 1; grid-column-start: 2; grid-column-end: 4;}}
+@media (max-width: 991px) {.text--u-iwxjq78ku {grid-row-start: 1; grid-row-end: 1; grid-column-start: 1; grid-column-end: 3;}}
