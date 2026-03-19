@@ -5,7 +5,7 @@ get_header();
 	<section section-dark-theme="" class="section section-cover" id="ies2q7q46_0">
 		<div class="div page-cover_component flex-direction-vertical" id="i905smb5f_0">
 			<div class="div padding-block-large" id="iiyh304i8_0">
-				<h1 class="text heading-style-h1 text-color-black heading-style-h1--is-page-cover" id="ijmxwrbg4_0"><?php esc_html_e( 'Блог', 'lvl-neva' ); ?></h1>
+				<h1 class="text heading-style-h1 text-color-black heading-style-h1--is-page-cover" id="ijmxwrbg4_0">Блог</h1>
 				<?php
 				get_template_part(
 					'template-parts/components/breadcrumbs',
@@ -30,6 +30,16 @@ get_header();
 	<section class="section section-news background-light-grey" id="ithc4hsyk_0">
 		<div class="div padding-global section-news_padding" id="i8g5iq5ti_0">
 			<div class="div flex-direction-vertical section_title-gap" id="i0nrf9qpz_0">
+				<div class="div flex-direction-horizontal content-tags" role="radiogroup" aria-label="Фильтр контента">
+					<?php foreach ( array( 'Все', 'Интерьер', 'Применение', 'О материале' ) as $index => $tag ) : ?>
+						<label class="content-tags__item border-radius">
+							<input class="content-tags__input" type="radio" name="content-tag" <?php checked( 0, $index ); ?>>
+							<span class="content-tags__button div flex-center-all border-radius">
+								<span class="text-style-body content-tags__text"><?php echo esc_html( $tag ); ?></span>
+							</span>
+						</label>
+					<?php endforeach; ?>
+				</div>
 				<div class="collection" id="ijktx60l9_0">
 					<div role="list" class="collection__list grid-3 grid-gap grid-3--is-news-page">
 						<?php if ( have_posts() ) : ?>
@@ -48,6 +58,8 @@ get_header();
 			</div>
 		</div>
 	</section>
+
+	<?php get_template_part( 'template-parts/sections/contact-form', null, array( 'button_label' => 'Смотреть весь каталог' ) ); ?>
 </main>
 <?php
 get_footer();

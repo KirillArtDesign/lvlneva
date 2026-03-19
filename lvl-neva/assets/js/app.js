@@ -1,4 +1,5 @@
-// mobile product filter
+// Source: shop.html
+// Mobile catalog filter drawer.
 document.addEventListener("DOMContentLoaded", function () {
   const drawers = document.querySelectorAll("[data-filter-drawer]");
 
@@ -39,7 +40,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// headder and mobile menu
+// Source: header.html, index.html, blog.html, contacts.html, portfolio.html
+// Mobile menu opening, page scroll lock and header state on scroll.
 document.addEventListener("DOMContentLoaded", () => {
     const modalMenu = document.querySelector("[modal-menu]");
     const header = document.querySelector(".section-header");
@@ -267,12 +269,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-// FAQ
+// Source: servise-page.html and portfolio-page.html
+// FAQ accordion.
 document.addEventListener('DOMContentLoaded', function () {
   const accordionItems = document.querySelectorAll('.faq-accordion__item');
 
   accordionItems.forEach((item) => {
     const button = item.querySelector('.faq-accordion__trigger');
+
+    if (!button) return;
 
     button.addEventListener('click', function () {
       const isOpen = item.classList.contains('is-open');
@@ -281,7 +286,9 @@ document.addEventListener('DOMContentLoaded', function () {
         accordionItem.classList.remove('is-open');
 
         const accordionButton = accordionItem.querySelector('.faq-accordion__trigger');
-        accordionButton.setAttribute('aria-expanded', 'false');
+        if (accordionButton) {
+          accordionButton.setAttribute('aria-expanded', 'false');
+        }
       });
 
       if (!isOpen) {
@@ -293,7 +300,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Product purchase controls
+// Source: product.html
+// Quantity controls inside the product purchase block.
 document.addEventListener("DOMContentLoaded", () => {
   const qtyControls = document.querySelectorAll("[data-qty-control]");
 
@@ -333,6 +341,183 @@ document.addEventListener("DOMContentLoaded", () => {
 
     syncValue(getSafeValue());
   });
+});
+
+// Source: index.html, servise-page.html, portfolio-page.html and product.html
+// Inline slider and video initialisations moved out of page templates into the shared theme script.
+document.addEventListener("DOMContentLoaded", () => {
+  const preventLinkButtons = (selector) => {
+    document.querySelectorAll(selector).forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+      });
+    });
+  };
+
+  const initCatalogSliders = () => {
+    if (typeof window.Swiper !== "function") {
+      return;
+    }
+
+    preventLinkButtons('[equipments-slider="prev"], [equipments-slider="next"]');
+
+    document.querySelectorAll('[equipments-slider="container"]').forEach((container) => {
+      const scope = container.closest(".section-equipments, .section-services-page, .main-wrapper, main, body");
+      const prevEl = scope ? scope.querySelector('[equipments-slider="prev"]') : null;
+      const nextEl = scope ? scope.querySelector('[equipments-slider="next"]') : null;
+
+      if (container.dataset.swiperReady === "true") {
+        return;
+      }
+
+      const isServicePageSlider = Boolean(
+        container.closest(".section-services-page, .single-service-page")
+      );
+
+      new window.Swiper(container, {
+        watchOverflow: true,
+        speed: 900,
+        grabCursor: true,
+        watchSlidesProgress: true,
+        slidesPerView: isServicePageSlider ? 2 : 1,
+        effect: "creative",
+        creativeEffect: {
+          limitProgress: 2,
+          prev: {
+            translate: ["calc(-100% - 20px)", 0, 0],
+            opacity: 1,
+            scale: 1,
+          },
+          next: {
+            translate: ["calc(100% + 20px)", 0, 0],
+            opacity: 1,
+            scale: 1,
+          },
+        },
+        navigation: {
+          prevEl,
+          nextEl,
+          disabledClass: "swiper-button-disabled",
+        },
+        breakpoints: isServicePageSlider
+          ? undefined
+          : {
+              992: {
+                slidesPerView: 2,
+              },
+            },
+      });
+
+      container.dataset.swiperReady = "true";
+    });
+  };
+
+  const initPreviewSliders = () => {
+    if (typeof window.Swiper !== "function") {
+      return;
+    }
+
+    preventLinkButtons('[equipment-slider="prev"], [equipment-slider="next"]');
+
+    document.querySelectorAll('[equipment-slider="preview"]').forEach((container) => {
+      if (container.dataset.swiperReady === "true") {
+        return;
+      }
+
+      const sliderComponent = container.closest(".equipment-page_slider_component");
+      const prevEl = sliderComponent ? sliderComponent.querySelector('[equipment-slider="prev"]') : null;
+      const nextEl = sliderComponent ? sliderComponent.querySelector('[equipment-slider="next"]') : null;
+      const thumbs = sliderComponent ? sliderComponent.querySelectorAll(".equipment-page_slider_thumb") : [];
+
+      const slider = new window.Swiper(container, {
+        watchOverflow: true,
+        speed: 600,
+        slidesPerView: 1,
+        spaceBetween: 1,
+        centeredSlides: false,
+        width: null,
+        navigation: {
+          prevEl,
+          nextEl,
+        },
+        on: {
+          slideChange() {
+            updateThumbs(this.activeIndex);
+          },
+        },
+      });
+
+      const updateThumbs = (activeIndex) => {
+        thumbs.forEach((thumb, thumbIndex) => {
+          thumb.classList.toggle("active", thumbIndex === activeIndex);
+        });
+      };
+
+      thumbs.forEach((thumb, index) => {
+        thumb.setAttribute("data-index", String(index));
+
+        thumb.addEventListener("click", (event) => {
+          event.preventDefault();
+          slider.slideTo(index);
+        });
+      });
+
+      updateThumbs(slider.activeIndex || 0);
+      container.dataset.swiperReady = "true";
+    });
+  };
+
+  const initInlineVideos = () => {
+    document.querySelectorAll(".video-player-block").forEach((block) => {
+      if (block.dataset.videoReady === "true") {
+        return;
+      }
+
+      const trigger = block.querySelector(".video-player-block__play");
+      const embedWrap = block.querySelector(".video-player-block__embed-wrap");
+      const source = block.getAttribute("data-video-src") || "";
+      const type = block.getAttribute("data-video-type") || "iframe";
+
+      if (!trigger || !embedWrap || !source) {
+        return;
+      }
+
+      trigger.addEventListener("click", () => {
+        if (block.classList.contains("is-playing")) {
+          return;
+        }
+
+        let mediaElement = null;
+
+        if (type === "video") {
+          mediaElement = document.createElement("video");
+          mediaElement.className = "video-player-block__media";
+          mediaElement.src = source;
+          mediaElement.controls = true;
+          mediaElement.autoplay = true;
+          mediaElement.playsInline = true;
+          mediaElement.setAttribute("webkit-playsinline", "true");
+        } else {
+          mediaElement = document.createElement("iframe");
+          mediaElement.className = "video-player-block__embed";
+          mediaElement.src = `${source}${source.includes("?") ? "&" : "?"}autoplay=1&rel=0`;
+          mediaElement.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+          mediaElement.allowFullscreen = true;
+          mediaElement.title = "Видео";
+        }
+
+        embedWrap.innerHTML = "";
+        embedWrap.appendChild(mediaElement);
+        block.classList.add("is-playing");
+      });
+
+      block.dataset.videoReady = "true";
+    });
+  };
+
+  initCatalogSliders();
+  initPreviewSliders();
+  initInlineVideos();
 });
 
 // Legacy GSAP animations
