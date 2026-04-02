@@ -1,33 +1,38 @@
 <?php
+if ( is_singular( 'post' ) ) {
+	get_template_part( 'blog-page' );
+	return;
+}
+
+if ( is_singular( 'services' ) ) {
+	get_template_part( 'service-page' );
+	return;
+}
+
+if ( is_singular( 'portfolio' ) ) {
+	get_template_part( 'portfolio-page' );
+	return;
+}
+
 get_header();
 ?>
-<main class="div main-wrapper">
+<main class="site-main">
 	<?php if ( have_posts() ) : ?>
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
-			<section section-dark-theme="" class="section section-cover" id="ies2q7q46_0">
-				<div class="div page-cover_component flex-direction-vertical" id="i905smb5f_0">
-					<div class="div padding-block-large" id="iiyh304i8_0">
-						<h1 class="text heading-style-h1 text-color-black heading-style-h1--is-page-cover" id="ijmxwrbg4_0"><?php the_title(); ?></h1>
-					</div>
+			<?php get_template_part( 'template-parts/sections/shared/page-title-section' ); ?>
+			<article <?php post_class( 'content-card' ); ?>>
+				<?php if ( 'post' === get_post_type() ) : ?>
+					<p class="post-meta">
+						<?php echo esc_html( get_the_date() ); ?>
+					</p>
+				<?php endif; ?>
+				<div class="entry-content">
+					<?php the_content(); ?>
 				</div>
-			</section>
+			</article>
 
-			<section class="section">
-				<div class="div flex-direction-vertical grid-gap size-width-full art-conteiner">
-					<div class="div flex-direction-horizontal size-width-full equipment-article">
-						<div class="div flex-direction-vertical size-width-full border-radius equipment-article__card">
-							<div class="div flex-direction-horizontal size-width-full equipment-article__top">
-								<div class="div flex-direction-vertical size-width-full equipment-article__content">
-									<div class="div flex-direction-vertical size-width-full equipment-article__section">
-										<?php the_content(); ?>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+			<?php the_post_navigation(); ?>
 		<?php endwhile; ?>
 	<?php endif; ?>
 </main>
