@@ -62,7 +62,7 @@ if ( ! function_exists( 'lvl_neva_get_first_element_inner_html' ) ) {
 
 		$previous_state = libxml_use_internal_errors( true );
 		$document       = new DOMDocument( '1.0', 'UTF-8' );
-		$wrapped_html   = sprintf( '<div id="lvl-neva-root">%s</div>', $html );
+		$wrapped_html   = sprintf( '<div>%s</div>', $html );
 
 		$document->loadHTML(
 			'<?xml encoding="utf-8" ?>' . $wrapped_html,
@@ -337,7 +337,7 @@ if ( ! function_exists( 'lvl_neva_render_equipment_article_html_fragment' ) ) {
 
 		$previous_state = libxml_use_internal_errors( true );
 		$document       = new DOMDocument( '1.0', 'UTF-8' );
-		$wrapped_html   = sprintf( '<div id="lvl-neva-content-root">%s</div>', $html );
+		$wrapped_html   = sprintf( '<div>%s</div>', $html );
 
 		$document->loadHTML(
 			'<?xml encoding="utf-8" ?>' . $wrapped_html,

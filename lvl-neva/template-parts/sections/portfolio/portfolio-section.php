@@ -16,10 +16,10 @@ $portfolio_archive_page_id = function_exists( 'lvl_neva_get_archive_page_for_pos
 $portfolio_archive_url     = $portfolio_archive_page_id ? get_permalink( $portfolio_archive_page_id ) : '';
 ?>
 
-<section class="section  section-services-page background-light-grey" id="il0p4zb9d_0">
+<section class="section  section-services-page background-light-grey">
 	<div class="div padding-global size-height-auto-tablet  services-page_padding">
 		<div class="div grid-4 services-card_component--height-full grid-4--is-services-layout"
-			id="iuccyujov_0">
+		>
 			<h2 gsap-text-scroll-animation=""
 				class="text heading-style-h4 text-color-grey text--u-irj2o420v "
 				>

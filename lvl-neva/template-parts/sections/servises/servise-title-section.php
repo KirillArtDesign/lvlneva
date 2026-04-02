@@ -12,26 +12,26 @@ $service_image_title       = $service_image_id ? get_the_title( $service_image_i
 $breadcrumb_items          = function_exists( 'lvl_neva_get_breadcrumb_items' ) ? lvl_neva_get_breadcrumb_items() : array();
 ?>
 
-<section section-dark-theme="" class="section service-hero" id="ies2q7q46_0">
-    <div class="div page-cover_component flex-direction-vertical service-hero__cover" id="i905smb5f_0">
-        <div class="div layer-center" id="is97mc4lv_0">
-            <div class="image size-full-percentage " id="i64vul19a_0">
+<section section-dark-theme="" class="section service-hero">
+    <div class="div page-cover_component flex-direction-vertical service-hero__cover">
+        <div class="div layer-center">
+            <div class="image size-full-percentage ">
                 <?php if ( $service_image_url ) : ?>
                     <img src="<?php echo esc_url( $service_image_url ); ?>" alt="<?php echo esc_attr( $service_image_alt ); ?>"
-                        title="<?php echo esc_attr( $service_image_title ); ?>" class="image__img" id="icssm0nbc_0">
+                        title="<?php echo esc_attr( $service_image_title ); ?>" class="image__img">
                 <?php endif; ?>
             </div>
         </div>
 
-        <div class="div page-cover_service-content service-hero__content" id="iiyh304i8_0">
+        <div class="div page-cover_service-content service-hero__content">
             <div class="div size-height-full flex-align-bottom flex-direction-horizontal service-hero__content-row"
-                id="ii01w2zbi_0">
-                <div class="div padding-block-large service-hero__inner" id="iiyh304i8_inner">
+               >
+                <div class="div padding-block-large service-hero__inner">
 
                     <div class="div flex-direction-vertical service-hero__top">
                         <h1 gsap-text-instant-animation=""
                             class="text heading-style-h1 text-color-white heading-style-h1--is-page-cover"
-                            id="ijmxwrbg4_0">
+                           >
                             <?php echo esc_html( $service_title ); ?>
                         </h1>
 
@@ -70,7 +70,7 @@ $breadcrumb_items          = function_exists( 'lvl_neva_get_breadcrumb_items' ) 
 
                         <button
                             class="button-large_component hero-corner-roll-btn hero-corner-roll-btn--white-brand-hover hero-corner-roll-btn--h100"
-                            data-action-element="" data-contact-drawer-open aria-controls="site-contact-drawer-panel" aria-expanded="false" gsap-elements-scroll-animation="" id="i8o80ox3i_0" type="button">
+                            data-action-element="" data-contact-drawer-open aria-controls="site-contact-drawer-panel" aria-expanded="false" gsap-elements-scroll-animation="" type="button">
                             <span class="hero-corner-roll-btn__label" data-label="Оставить заявку">
                                 <span class="hero-corner-roll-btn__label-text">Оставить заявку</span>
                             </span>

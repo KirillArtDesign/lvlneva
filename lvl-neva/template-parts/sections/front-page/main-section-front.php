@@ -27,22 +27,22 @@ $allowed_title_html_tags = array(
 			</div>
 
 		</div>
-		<div class="div size-height-full padding-block-large" id="i8f25j36j_0">
-			<div class="div flex-direction-vertical space-between size-height-full" id="ivy1x3vgo_0">
+		<div class="div size-height-full padding-block-large">
+			<div class="div flex-direction-vertical space-between size-height-full">
 				<h1 class="text heading-style-h1 text-color-white heading-style-h1--is-page-cover" cover-title="">
 					<?php echo wp_kses( $hero_title, $allowed_title_html_tags ); ?>
 				</h1>
 				<div class="div flex-direction-horizontal space-between flex-align-bottom page-cover_gap-small"
-					id="i064nrn2x_0">
+				>
 					<div class="div flex-direction-vertical page-cover_gap-small page-cover_description-wrapper"
-						id="ibq5y1bld_0">
+					>
 						<div class="text text-style-body text-color-white" >
 							<span class="text-block-wrap-div">
 								<?php echo esc_html( $hero_description ); ?>
 							</span>
 						</div>
 						<div class="div flex-direction-horizontal page-cover_gap-xsmall div--u-iht1cbxm4"
-							id="iht1cbxm4_0" max-width="100">
+						 max-width="100">
 
 							<button class="hero-corner-roll-btn" type="button" data-menu-trigger="equipment">
 								<span class="hero-corner-roll-btn__label" data-label="Каталог">
@@ -94,11 +94,11 @@ $allowed_title_html_tags = array(
 
 						</div>
 					</div>
-					<!-- <div class="div size-width-auto hide-on-mobile" id="ix6otuukn_0">
+					<!-- <div class="div size-width-auto hide-on-mobile">
 						<div class="div border-radius button-iconic_component text-color-white pointer-events-none background-blur"
-							id="i39ezoh5d_0">
-							<div class="div flex-center-all size-height-full" id="igt550pbk_0">
-								<div class="embed icon_component embed--u-igtqj1h0t flex-center-all" id="igtqj1h0t_0">
+						>
+							<div class="div flex-center-all size-height-full">
+								<div class="embed icon_component embed--u-igtqj1h0t flex-center-all">
 									<svg fill="none" height="24" viewbox="0 0 24 24" width="24"
 										xmlns="http://www.w3.org/2000/svg">
 										<path

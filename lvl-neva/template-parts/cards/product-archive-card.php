@@ -143,9 +143,9 @@ if ( $product->is_type( 'variable' ) ) {
 					<div class="div flex-direction-vertical size-height-full equipments-card-adaptive__content-inner">
 						<div class="div flex-direction-vertical equipments-card-adaptive__top">
 							<h3 class="text heading-style-h3 equipments-card-adaptive__title">
-								<a href="<?php echo esc_url( $product_permalink ); ?>" class="nav-btn product-archive-card__title-link" style="padding:0;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:0;justify-content:flex-start;color:var(--Black, #010101);text-decoration:none;" aria-label="<?php echo esc_attr( $product_title ); ?>">
+								<a href="<?php echo esc_url( $product_permalink ); ?>" class="nav-btn product-archive-card__title-link" aria-label="<?php echo esc_attr( $product_title ); ?>">
 									<span class="nav-btn__label" data-label="<?php echo esc_attr( $product_title ); ?>">
-										<span class="nav-btn__label-text" style="color:inherit;"><?php echo esc_html( $product_title ); ?></span>
+										<span class="nav-btn__label-text"><?php echo esc_html( $product_title ); ?></span>
 									</span>
 								</a>
 							</h3>

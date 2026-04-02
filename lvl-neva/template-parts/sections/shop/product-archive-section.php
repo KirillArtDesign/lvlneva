@@ -25,10 +25,10 @@ if ( function_exists( 'woocommerce_pagination' ) ) {
 
 
 
-<section class="section  section-services-page" id="il0p4zb9d_0">
+<section class="section  section-services-page">
                         <div class="div padding-global size-height-auto-tablet size-height-full services-page_padding">
                             <div class="div grid-4 services-card_component--height-full grid-4--is-services-layout"
-                                id="iuccyujov_0"
+                               
                                 data-shop-archive>
 
 

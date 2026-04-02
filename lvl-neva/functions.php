@@ -184,18 +184,6 @@ function lvl_neva_enqueue_assets() {
 		
 	);
 	$js_priority   = array(
-		'do.jquery.js',
-		'do.lodash-es.js',
-		'do.resizeController.js',
-		'do.section.js',
-		'do.getCurrentProps.js',
-		'do.jquery.inputmask.js',
-		'do.tt_animation.js',
-		'do.tt_collection_v1.js',
-		'do.tt_form.js',
-		'do.tt_link_universal.js',
-		'do.tt_modal.js',
-		'do.tt_video.js',
 		'do.js',
 		'app.js',
 	);

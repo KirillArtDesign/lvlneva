@@ -81,33 +81,33 @@ if ( ! $transparent_header ) {
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <div class="mosaic-wrap">
-	<div class="root" id="ixk5p1v0q_0">
-		<div class="div page-wrapper" id="inop4r3eo_0">
-			<header class="<?php echo esc_attr( $header_classes ); ?>" id="iqqstow7w_0">
-				<div class="header_component text-color-white" id="i4rbm5ovy_0">
-					<div class="padding-global header_pading" id="ieze7tcw0_0">
-						<nav class="space-between flex-direction-horizontal" id="i24exr1k9_0" aria-label="<?php esc_attr_e( 'Primary navigation', 'lvl-neva' ); ?>">
-							<div class="flex-direction-horizontal size-width-auto" id="inyjwzbe1_0">
-								<a class="link-block logo_component" data-action-element="" href="<?php echo esc_url( home_url( '/' ) ); ?>" id="ib39luf6x_0">
-									<div class="flex-direction-horizontal flex-align-center logo_gap" id="ii8c79phr_0">
-										<div class="logo_img border-radius background-light-grey text-color-black" id="ih8y7q43r_0">
-											<div class="embed icon_full flex-center-all" id="imbax6cte_0">
+	<div class="root">
+		<div class="div page-wrapper">
+			<header class="<?php echo esc_attr( $header_classes ); ?>">
+				<div class="header_component text-color-white">
+					<div class="padding-global header_pading">
+						<nav class="space-between flex-direction-horizontal" aria-label="<?php esc_attr_e( 'Primary navigation', 'lvl-neva' ); ?>">
+							<div class="flex-direction-horizontal size-width-auto">
+								<a class="link-block logo_component" data-action-element="" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+									<div class="flex-direction-horizontal flex-align-center logo_gap">
+										<div class="logo_img border-radius background-light-grey text-color-black">
+											<div class="embed icon_full flex-center-all">
 												<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 													<rect width="40" height="40" rx="3" fill="white" />
 													<path d="M19.7773 8.2959L12.8887 13.4443L12.8516 32.0928L19.7959 32.083L19.7773 34.1484H6V15.9258L19.7773 6V8.2959ZM24.5186 9.11133V34.1484H20.2217V6L24.5186 9.11133ZM29.2588 12.5186V34.1484H24.9629V9.40723L29.2588 12.5186ZM34 15.9258V34.1475H29.7041V12.8145L34 15.9258Z" fill="#31572C" />
 												</svg>
 											</div>
 										</div>
-										<div class="logo_text" id="i7somn69v_0">
-											<div class="embed logo_text-svg flex-align-center flex-direction-horizontal" id="ic5o8jdgx_0">
+										<div class="logo_text">
+											<div class="embed logo_text-svg flex-align-center flex-direction-horizontal">
 												<span class="text heading-style-h6 text-color-white">LVL Neva</span>
 											</div>
 										</div>
 									</div>
 								</a>
 
-								<div class="show-on-desktop" id="inugd12n6_0">
-									<div class="hedaer_gap-small flex-direction-horizontal" id="isxx6rqer_0">
+								<div class="show-on-desktop">
+									<div class="hedaer_gap-small flex-direction-horizontal">
 										<a class="nav-btn text-style-body flex-align-center" href="<?php echo esc_url( $shop_archive_url ); ?>">
 											<span class="nav-btn__label" data-label="Каталог">
 												<span class="nav-btn__label-text">Каталог</span>
@@ -139,7 +139,7 @@ if ( ! $transparent_header ) {
 								</div>
 							</div>
 
-							<div class="show-on-desktop size-width-auto" id="ijiu7spja_0">
+							<div class="show-on-desktop size-width-auto">
 								<div class="header_gap-large flex-direction-horizontal flex-align-center">
 									<div class="site-nav__right is-desktop">
 										<div class="site-nav__links flex-align-center">
@@ -247,7 +247,7 @@ if ( ! $transparent_header ) {
 				</div>
 			</header>
 
-			<nav modal-menu="" class="div size-full-screen menu_component background-light-grey mobile-menu-v2" id="ix26eremq_0" aria-hidden="true">
+			<nav modal-menu="" class="div size-full-screen menu_component background-light-grey mobile-menu-v2" aria-hidden="true">
 				<div class="div size-height-full flex-direction-vertical mobile-menu-v2__wrap">
 					<div class="div flex-direction-vertical size-width-full mobile-menu-v2__main">
 						<div class="div flex-direction-horizontal space-between mobile-menu-v2__top">

@@ -11,26 +11,26 @@ $allowed_description_html_tags = array(
 
 ?>
 
-<section class="section section-about" id="inlo96tu3_0">
+<section class="section section-about">
 
-    <div class="div padding-global section-about_padding" id="ifu9ijfws_0">
-        <div class="div flex-direction-vertical section-about_gap-xlarge" id="ia2exkr3r_0">
-            <div class="div grid-4 section-about_gap-large" id="iv49dy8l2_0">
+    <div class="div padding-global section-about_padding">
+        <div class="div flex-direction-vertical section-about_gap-xlarge">
+            <div class="div grid-4 section-about_gap-large">
                 <h2 class="text heading-style-h4 text-color-grey">
                     О компании
                 </h2>
-                <div class="div grid_col-padding-left div--u-ilzpox96w" id="ilzpox96w_0">
-                    <h3 class="text heading-style-h2 text--u-ilv3qk1pz" id="ilv3qk1pz_0">
+                <div class="div grid_col-padding-left div--u-ilzpox96w">
+                    <h3 class="text heading-style-h2 text--u-ilv3qk1pz">
                         <?php echo esc_html( $about_title ); ?>
                     </h3>
                 </div>
                 <div class="div" style="grid-column: 3 / 5;grid-row: 2 / 3;">
                     <div class="div flex-direction-vertical section-about_gap-medium">
                         <div class="div flex-direction-vertical section-about_gap-small div--u-irs9pk5nk text-max-width"
-                            gsap-opacity-scroll-animation="" id="irs9pk5nk_0" style="opacity: 1">
+                            gsap-opacity-scroll-animation="" style="opacity: 1">
 
                             <div class="tt-rich-text text-style-body text-color-grey" gsap-opacity-scroll-animation=""
-                                id="i2pj64dgv_0" rich-text="about" style="opacity: 1">
+                                rich-text="about" style="opacity: 1">
                                 <div class="text-block-wrap-div">
                                     <p><?php echo wp_kses( $about_description, $allowed_description_html_tags ); ?></p>
                                 </div>
@@ -40,7 +40,7 @@ $allowed_description_html_tags = array(
 
 
                             <button class="hero-corner-roll-btn hero-corner-roll-btn--brand hero-corner-roll-btn--h100"
-                                data-action-element="" gsap-elements-scroll-animation="" id="i8o80ox3i_0" type="button">
+                                data-action-element="" gsap-elements-scroll-animation="" type="button">
                                 <span class="hero-corner-roll-btn__label" data-label="Подробнее о компании">
                                     <span class="hero-corner-roll-btn__label-text">Подробнее о компании</span>
                                 </span>
@@ -69,7 +69,7 @@ $allowed_description_html_tags = array(
                     </div>
                 </div>
             </div>
-            <div class="div grid-4 grid-4--is-benefits" id="i67z84zn4_0">
+            <div class="div grid-4 grid-4--is-benefits">
                 <?php if ( have_rows( 'about_priemushhestva' ) ) : ?>
                     <?php $benefit_index = 0; ?>
                     <?php while ( have_rows( 'about_priemushhestva' ) ) : the_row(); ?>

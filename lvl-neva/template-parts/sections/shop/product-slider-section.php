@@ -81,15 +81,15 @@ if ( ! $product_slider_query->have_posts() ) {
 	return;
 }
 ?>
-<section class="section section-full-screen section-equipments section--u-irwudmunb" id="irwudmunb_0">
-	<div class="div padding-global size-height-auto-tablet section-equipments_padding section-full-screen" id="i1plcpzdj_0">
-		<div class="div grid-4 grid-4--is-equipments-layout size-height-full size-height-auto-tablet" id="itwohodob_0">
+<section class="section section-full-screen section-equipments section--u-irwudmunb">
+	<div class="div padding-global size-height-auto-tablet section-equipments_padding section-full-screen">
+		<div class="div grid-4 grid-4--is-equipments-layout size-height-full size-height-auto-tablet">
 			<h2 class="text heading-style-h4 text-color-grey text--u-ihdpdjstl">
 				<?php echo esc_html( $product_slider_title ); ?>
 			</h2>
 
-			<div class="div section-equipments_slider-wrapper div--u-i08l6t9q5 size-height-full size-height-auto-tablet clip-content" id="i08l6t9q5_0">
-				<div class="collection size-height-full swiper size-height-auto-tablet" data-tt-widget-version="1" equipments-slider="container" id="iqtnpqe5r_0">
+			<div class="div section-equipments_slider-wrapper div--u-i08l6t9q5 size-height-full size-height-auto-tablet clip-content">
+				<div class="collection size-height-full swiper size-height-auto-tablet" data-tt-widget-version="1" equipments-slider="container">
 					<div aria-live="polite" class="collection__list size-height-full size-height-auto-tablet swiper-wrapper section-equipments_cards-flex" id="it4tph928_0" role="list" style="cursor: grab">
 						<?php while ( $product_slider_query->have_posts() ) : ?>
 							<?php
@@ -115,22 +115,22 @@ if ( ! $product_slider_query->have_posts() ) {
 
 			<div class="div show-on-desktop layer-left z-index-top show-on-desktop--is-equipments-slider-buttons">
 				<div class="div">
-					<div class="div slider-buttons_component" id="iz6t651tk_0">
-						<div class="div flex-direction-horizontal" id="idijeb8sy_0">
-							<a aria-controls="it4tph928_0" aria-disabled="false" aria-label="Previous slide" button-iconic-hover-animation="" class="link-block link-block--u-iigo3gnpy border-radius button-iconic_component text-color-brand background-white" data-action-element="" equipments-slider="prev" href="#" id="iigo3gnpy_0" role="button" tabindex="0">
-								<div class="div flex-direction-vertical" id="ic6arp6e1_0">
-									<div class="div div--u-i9ekafbym clip-content border-radius button-iconic__top background-brand text-color-white" id="i9ekafbym_0">
-										<div class="div size-full-percentage flex-center-all" id="i09cjmyfj_0">
-											<div class="embed icon_component embed--u-i0ydq3xjl flex-center-all opacity" id="i0ydq3xjl_0">
+					<div class="div slider-buttons_component">
+						<div class="div flex-direction-horizontal">
+							<a aria-controls="it4tph928_0" aria-disabled="false" aria-label="Previous slide" button-iconic-hover-animation="" class="link-block link-block--u-iigo3gnpy border-radius button-iconic_component text-color-brand background-white" data-action-element="" equipments-slider="prev" href="#" role="button" tabindex="0">
+								<div class="div flex-direction-vertical">
+									<div class="div div--u-i9ekafbym clip-content border-radius button-iconic__top background-brand text-color-white">
+										<div class="div size-full-percentage flex-center-all">
+											<div class="embed icon_component embed--u-i0ydq3xjl flex-center-all opacity">
 												<svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
 													<path d="M12.0898 6.71289L7.72363 10.999H18.5V12.999H7.72363L12.0898 17.2852L10.6885 18.7129L5.5 13.6182V10.3799L10.6885 5.28516L12.0898 6.71289Z" fill="currentColor"></path>
 												</svg>
 											</div>
 										</div>
 									</div>
-									<div class="div div--u-i9ipmrni7 button-iconic__bottom" id="i9ipmrni7_0">
-										<div class="div size-full-percentage flex-center-all" id="i5peipexg_0">
-											<div class="embed icon_component embed--u-i600v39mo flex-center-all" id="i600v39mo_0">
+									<div class="div div--u-i9ipmrni7 button-iconic__bottom">
+										<div class="div size-full-percentage flex-center-all">
+											<div class="embed icon_component embed--u-i600v39mo flex-center-all">
 												<svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
 													<path d="M12.0898 6.71289L7.72363 10.999H18.5V12.999H7.72363L12.0898 17.2852L10.6885 18.7129L5.5 13.6182V10.3799L10.6885 5.28516L12.0898 6.71289Z" fill="currentColor"></path>
 												</svg>
@@ -140,20 +140,20 @@ if ( ! $product_slider_query->have_posts() ) {
 								</div>
 							</a>
 
-							<a aria-controls="it4tph928_0" aria-disabled="false" aria-label="Next slide" button-iconic-hover-animation="" class="link-block link-block--u-iwsuicknx border-radius button-iconic_component text-color-white background-brand" data-action-element="" equipments-slider="next" href="#" id="iwsuicknx_0" role="button" tabindex="0">
-								<div class="div flex-direction-vertical" id="it0wslrqr_0">
-									<div class="div div--u-i42430wfu clip-content border-radius button-iconic__top background-brand text-color-white" id="i42430wfu_0">
-										<div class="div size-full-percentage flex-center-all" id="i9pf9e9ee_0">
-											<div class="embed icon_component embed--u-i2z2160jq flex-center-all opacity" id="i2z2160jq_0">
+							<a aria-controls="it4tph928_0" aria-disabled="false" aria-label="Next slide" button-iconic-hover-animation="" class="link-block link-block--u-iwsuicknx border-radius button-iconic_component text-color-white background-brand" data-action-element="" equipments-slider="next" href="#" role="button" tabindex="0">
+								<div class="div flex-direction-vertical">
+									<div class="div div--u-i42430wfu clip-content border-radius button-iconic__top background-brand text-color-white">
+										<div class="div size-full-percentage flex-center-all">
+											<div class="embed icon_component embed--u-i2z2160jq flex-center-all opacity">
 												<svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
 													<path d="M18.5 10.3809V13.6191L13.3115 18.7139L11.9102 17.2861L16.2764 13H5.5V11H16.2764L11.9102 6.71387L13.3115 5.28613L18.5 10.3809Z" fill="currentColor"></path>
 												</svg>
 											</div>
 										</div>
 									</div>
-									<div class="div div--u-idhlvqjcz button-iconic__bottom" id="idhlvqjcz_0">
-										<div class="div size-full-percentage flex-center-all" id="ikdbz5xdw_0">
-											<div class="embed icon_component embed--u-igww5j4kx flex-center-all" id="igww5j4kx_0">
+									<div class="div div--u-idhlvqjcz button-iconic__bottom">
+										<div class="div size-full-percentage flex-center-all">
+											<div class="embed icon_component embed--u-igww5j4kx flex-center-all">
 												<svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
 													<path d="M18.5 10.3809V13.6191L13.3115 18.7139L11.9102 17.2861L16.2764 13H5.5V11H16.2764L11.9102 6.71387L13.3115 5.28613L18.5 10.3809Z" fill="currentColor"></path>
 												</svg>
@@ -167,10 +167,10 @@ if ( ! $product_slider_query->have_posts() ) {
 				</div>
 			</div>
 
-			<div class="div flex-direction-horizontal flex-align-bottom div--u-iltmzvhq2 flex-align-bottom--is-equipment-button grid-2-tablet" id="iltmzvhq2_0">
-				<div class="div div--u-iw325u2iw tablet-col-right" id="iw325u2iw_0">
+			<div class="div flex-direction-horizontal flex-align-bottom div--u-iltmzvhq2 flex-align-bottom--is-equipment-button grid-2-tablet">
+				<div class="div div--u-iw325u2iw tablet-col-right">
 					<div class="card-wrapper border-radius" data-original-height="126.65625">
-						<a class="button-large_component hero-corner-roll-btn hero-corner-roll-btn--brand hero-corner-roll-btn--h100" data-action-element="" gsap-elements-scroll-animation="" id="i8o80ox3i_0" href="<?php echo esc_url( $product_slider_shop_archive_url ); ?>">
+						<a class="button-large_component hero-corner-roll-btn hero-corner-roll-btn--brand hero-corner-roll-btn--h100" data-action-element="" gsap-elements-scroll-animation="" href="<?php echo esc_url( $product_slider_shop_archive_url ); ?>">
 							<span class="hero-corner-roll-btn__label" data-label="Смотреть весь каталог">
 								<span class="hero-corner-roll-btn__label-text">Смотреть весь каталог</span>
 							</span>

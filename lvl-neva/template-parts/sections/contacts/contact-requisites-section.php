@@ -54,9 +54,9 @@ if ( empty( $contacts_requisite_rows ) ) {
 	);
 }
 ?>
-<section class="section section-services-page background-light-grey" id="il0p4zb9d_0">
+<section class="section section-services-page background-light-grey">
 	<div class="div padding-global size-height-auto-tablet services-page_padding">
-		<div class="div grid-4 services-card_component--height-full grid-4--is-services-layout" id="iuccyujov_0">
+		<div class="div grid-4 services-card_component--height-full grid-4--is-services-layout">
 			<h2 gsap-text-scroll-animation="" class="text heading-style-h4 text-color-grey text--u-irj2o420v">
 				Реквизиты
 			</h2>
