@@ -16,6 +16,22 @@ if ( ! function_exists( 'lvl_neva_get_context_title' ) ) {
 		}
 
 		if ( is_post_type_archive() ) {
+			$post_type = get_query_var( 'post_type' );
+
+			if ( is_array( $post_type ) ) {
+				$post_type = reset( $post_type );
+			}
+
+			$post_type = sanitize_key( (string) $post_type );
+
+			if ( $post_type && function_exists( 'lvl_neva_get_archive_title_for_post_type' ) ) {
+				$archive_title = lvl_neva_get_archive_title_for_post_type( $post_type );
+
+				if ( '' !== $archive_title ) {
+					return $archive_title;
+				}
+			}
+
 			return post_type_archive_title( '', false );
 		}
 
@@ -146,21 +162,21 @@ if ( ! function_exists( 'lvl_neva_get_breadcrumb_items' ) ) {
 				}
 			} else {
 				$post_type_object = get_post_type_object( $post_type );
+				$archive_page_id  = lvl_neva_get_archive_page_for_post_type( $post_type );
+				$archive_label    = $archive_page_id ? get_the_title( $archive_page_id ) : '';
+				$archive_url      = function_exists( 'lvl_neva_get_archive_url_for_post_type' )
+					? lvl_neva_get_archive_url_for_post_type( $post_type )
+					: '';
 
-				if ( $post_type_object && $post_type_object->has_archive ) {
+				if ( '' === $archive_label && $post_type_object && ! empty( $post_type_object->labels->name ) ) {
+					$archive_label = $post_type_object->labels->name;
+				}
+
+				if ( $archive_label && $archive_url ) {
 					$items[] = array(
-						'label' => $post_type_object->labels->name,
-						'url'   => get_post_type_archive_link( $post_type ),
+						'label' => $archive_label,
+						'url'   => $archive_url,
 					);
-				} else {
-					$archive_page_id = lvl_neva_get_archive_page_for_post_type( $post_type );
-
-					if ( $archive_page_id ) {
-						$items[] = array(
-							'label' => get_the_title( $archive_page_id ),
-							'url'   => get_permalink( $archive_page_id ),
-						);
-					}
 				}
 
 				if ( is_post_type_hierarchical( $post_type ) ) {
@@ -184,8 +200,20 @@ if ( ! function_exists( 'lvl_neva_get_breadcrumb_items' ) ) {
 		}
 
 		if ( is_post_type_archive() ) {
+			$post_type = get_query_var( 'post_type' );
+
+			if ( is_array( $post_type ) ) {
+				$post_type = reset( $post_type );
+			}
+
+			$post_type      = sanitize_key( (string) $post_type );
+			$archive_label  = $post_type && function_exists( 'lvl_neva_get_archive_title_for_post_type' )
+				? lvl_neva_get_archive_title_for_post_type( $post_type )
+				: '';
+			$archive_label  = '' !== $archive_label ? $archive_label : post_type_archive_title( '', false );
+
 			$items[] = array(
-				'label'   => post_type_archive_title( '', false ),
+				'label'   => $archive_label,
 				'current' => true,
 			);
 

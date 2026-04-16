@@ -535,6 +535,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("lvlNevaShopResultsReplaced", (event) => {
     initProductArchiveCardVariations(event.detail?.root || document);
   });
+
+  document.addEventListener("lvlNevaShopItemsAppended", (event) => {
+    initProductArchiveCardVariations(event.detail?.root || document);
+  });
 });
 
 document.addEventListener("DOMContentLoaded", () => {

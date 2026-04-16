@@ -10,7 +10,7 @@ if ( empty( $content_filter ) ) {
 }
 ?>
 <section class="section section-news background-light-grey">
-	<div class="div padding-global section-news_padding">
+	<div class="div padding-global section-news_padding padding-top-0">
 		<div
 			class="div flex-direction-vertical section_title-gap"
 			data-content-filter

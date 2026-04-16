@@ -48,6 +48,127 @@ if ( ! function_exists( 'lvl_neva_get_dom_node_outer_html' ) ) {
 	}
 }
 
+if ( ! function_exists( 'lvl_neva_merge_css_classes' ) ) {
+	function lvl_neva_merge_css_classes( $existing_classes, $new_classes ) {
+		$existing_classes = preg_split( '/\s+/', trim( (string) $existing_classes ) );
+		$new_classes      = preg_split( '/\s+/', trim( (string) $new_classes ) );
+		$classes          = array_filter(
+			array_merge(
+				is_array( $existing_classes ) ? $existing_classes : array(),
+				is_array( $new_classes ) ? $new_classes : array()
+			)
+		);
+
+		return implode( ' ', array_values( array_unique( $classes ) ) );
+	}
+}
+
+if ( ! function_exists( 'lvl_neva_get_gutenberg_heading_text_class' ) ) {
+	function lvl_neva_get_gutenberg_heading_text_class( $tag_name ) {
+		$classes = array(
+			'h1' => 'text-heading-style-h1',
+			'h2' => 'text-heading-style-h2',
+			'h3' => 'text-heading-style-h3',
+			'h4' => 'text-heading-style-h4',
+			'h5' => 'text-heading-style-h5',
+		);
+
+		$tag_name = strtolower( (string) $tag_name );
+
+		return isset( $classes[ $tag_name ] ) ? $classes[ $tag_name ] : '';
+	}
+}
+
+if ( ! function_exists( 'lvl_neva_add_gutenberg_heading_classes_to_html' ) ) {
+	function lvl_neva_add_gutenberg_heading_classes_to_html( $html ) {
+		$html = trim( (string) $html );
+
+		if ( '' === $html || ! preg_match( '/<h[1-5]\b/i', $html ) ) {
+			return $html;
+		}
+
+		if ( class_exists( 'DOMDocument' ) ) {
+			$previous_state = libxml_use_internal_errors( true );
+			$document       = new DOMDocument( '1.0', 'UTF-8' );
+			$wrapped_html   = sprintf( '<div id="lvl-neva-heading-class-root">%s</div>', $html );
+
+			$document->loadHTML(
+				'<?xml encoding="utf-8" ?>' . $wrapped_html,
+				LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+			);
+
+			libxml_clear_errors();
+			libxml_use_internal_errors( $previous_state );
+
+			$root = null;
+
+			if ( class_exists( 'DOMXPath' ) ) {
+				$xpath     = new DOMXPath( $document );
+				$root_list = $xpath->query( '//*[@id="lvl-neva-heading-class-root"]' );
+				$root      = $root_list instanceof DOMNodeList && $root_list->length > 0 ? $root_list->item( 0 ) : null;
+			}
+
+			if ( $root ) {
+				foreach ( array( 'h1', 'h2', 'h3', 'h4', 'h5' ) as $tag_name ) {
+					$heading_nodes = $root->getElementsByTagName( $tag_name );
+
+					for ( $index = 0; $index < $heading_nodes->length; $index++ ) {
+						$heading_node = $heading_nodes->item( $index );
+
+						if ( ! $heading_node ) {
+							continue;
+						}
+
+						$heading_class = lvl_neva_get_gutenberg_heading_text_class( $tag_name );
+
+						if ( '' === $heading_class ) {
+							continue;
+						}
+
+						$heading_node->setAttribute(
+							'class',
+							lvl_neva_merge_css_classes( $heading_node->getAttribute( 'class' ), $heading_class )
+						);
+					}
+				}
+
+				return lvl_neva_get_dom_node_inner_html( $root );
+			}
+		}
+
+		return preg_replace_callback(
+			'/<(h[1-5])\b([^>]*)>/i',
+			static function ( $matches ) {
+				$tag_name      = strtolower( $matches[1] );
+				$heading_class = lvl_neva_get_gutenberg_heading_text_class( $tag_name );
+				$attributes    = isset( $matches[2] ) ? $matches[2] : '';
+
+				if ( '' === $heading_class ) {
+					return $matches[0];
+				}
+
+				if ( preg_match( '/\bclass\s*=\s*(["\'])(.*?)\1/i', $attributes, $class_matches ) ) {
+					$updated_class = lvl_neva_merge_css_classes( $class_matches[2], $heading_class );
+
+					return sprintf(
+						'<%1$s%2$s>',
+						$tag_name,
+						preg_replace(
+							'/\bclass\s*=\s*(["\'])(.*?)\1/i',
+							sprintf( 'class="%s"', esc_attr( $updated_class ) ),
+							$attributes,
+							1
+						)
+					);
+				}
+
+				return sprintf( '<%1$s class="%2$s"%3$s>', $tag_name, esc_attr( $heading_class ), $attributes );
+			},
+			$html
+		);
+	}
+}
+
 if ( ! function_exists( 'lvl_neva_get_first_element_inner_html' ) ) {
 	function lvl_neva_get_first_element_inner_html( $html ) {
 		$html = trim( (string) $html );
@@ -110,7 +231,7 @@ if ( ! function_exists( 'lvl_neva_flush_equipment_article_section' ) ) {
 		if ( '' !== trim( wp_strip_all_tags( $section['title'] ) ) ) {
 			$output .= sprintf(
 				'<div class="equipment-article__title">%s</div>',
-				$section['title']
+				lvl_neva_add_gutenberg_heading_classes_to_html( $section['title'] )
 			);
 		}
 
@@ -121,7 +242,7 @@ if ( ! function_exists( 'lvl_neva_flush_equipment_article_section' ) ) {
 
 			$output .= sprintf(
 				'<div class="equipment-article__text">%s</div>',
-				$text_html
+				lvl_neva_add_gutenberg_heading_classes_to_html( $text_html )
 			);
 		}
 
@@ -238,7 +359,7 @@ if ( ! function_exists( 'lvl_neva_render_equipment_article_dom_nodes' ) ) {
 
 			if ( in_array( $tag_name, array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ), true ) ) {
 				lvl_neva_flush_equipment_article_section( $output, $section );
-				$section['title'] = lvl_neva_get_dom_node_inner_html( $node );
+				$section['title'] = lvl_neva_add_gutenberg_heading_classes_to_html( lvl_neva_get_dom_node_outer_html( $node ) );
 				continue;
 			}
 
@@ -324,7 +445,7 @@ if ( ! function_exists( 'lvl_neva_render_equipment_article_dom_nodes' ) ) {
 
 if ( ! function_exists( 'lvl_neva_render_equipment_article_html_fragment' ) ) {
 	function lvl_neva_render_equipment_article_html_fragment( $html, &$output, &$section ) {
-		$html = trim( (string) $html );
+		$html = lvl_neva_add_gutenberg_heading_classes_to_html( trim( (string) $html ) );
 
 		if ( '' === $html ) {
 			return;
@@ -393,7 +514,7 @@ if ( ! function_exists( 'lvl_neva_render_equipment_article_blocks' ) ) {
 
 				case 'core/heading':
 					lvl_neva_flush_equipment_article_section( $output, $section );
-					$section['title'] = lvl_neva_get_first_element_inner_html( render_block( $block ) );
+					$section['title'] = lvl_neva_add_gutenberg_heading_classes_to_html( lvl_neva_get_first_element_inner_html( render_block( $block ) ) );
 					break;
 
 				case 'core/image':
@@ -454,7 +575,7 @@ if ( ! function_exists( 'lvl_neva_render_equipment_article_blocks' ) ) {
 
 					if ( '' !== $rendered_block ) {
 						lvl_neva_flush_equipment_article_section( $output, $section );
-						$output .= $rendered_block;
+						$output .= lvl_neva_add_gutenberg_heading_classes_to_html( $rendered_block );
 					}
 					break;
 			}

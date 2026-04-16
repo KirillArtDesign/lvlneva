@@ -6,8 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $services_block_title      = get_field( 'services_zagolovok' );
 $services_block_items      = get_field( 'services_uslugi_v_bloke' );
 $services_block_image      = get_field( 'services_izobrazhenie_v_bloke' );
-$services_archive_page_id  = function_exists( 'lvl_neva_get_archive_page_for_post_type' ) ? lvl_neva_get_archive_page_for_post_type( 'services' ) : 0;
-$services_archive_url      = $services_archive_page_id ? get_permalink( $services_archive_page_id ) : home_url( '/' );
+$services_archive_url      = function_exists( 'lvl_neva_get_archive_url_for_post_type' ) ? lvl_neva_get_archive_url_for_post_type( 'services' ) : home_url( '/' );
 $allowed_title_html_tags = array(
 	'br' => array(),
 );

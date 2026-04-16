@@ -43,24 +43,32 @@ if ( '' === $portfolio_image_alt ) {
 }
 ?>
 
-<div class="div flex-direction-horizontal size-width-full background-white border-radius project-case-card">
+<a
+  href="<?php echo esc_url( $portfolio_permalink ); ?>"
+  class="link-block div flex-direction-horizontal size-width-full background-white border-radius project-case-card project-case-card__card-link"
+  aria-label="<?php echo esc_attr( $portfolio_title ); ?>"
+>
   <div class="div flex-direction-vertical project-case-card__content-list">
     <div class="div flex-direction-vertical project-case-card__content-top">
-      <div class="project-case-card__title">
-        <?php echo esc_html( $portfolio_title ); ?>
-      </div>
+      <h3 class="project-case-card__title">
+        <span class="nav-btn project-case-card__title-roll" aria-hidden="true">
+          <span class="nav-btn__label" data-label="<?php echo esc_attr( $portfolio_title ); ?>">
+            <span class="nav-btn__label-text"><?php echo esc_html( $portfolio_title ); ?></span>
+          </span>
+        </span>
+      </h3>
 
       <div class="project-case-card__text">
         <?php echo esc_html( $portfolio_description ); ?>
       </div>
     </div>
 
-    <a href="<?php echo esc_url( $portfolio_permalink ); ?>" class="link-block div flex-direction-horizontal project-case-card__link">
+    <div class="div flex-direction-horizontal project-case-card__link" aria-hidden="true">
       <div class="project-case-card__link-text">Подробнее</div>
       <svg class="project-case-card__link-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M13.1111 18L18 13.2V12M13.1111 6L18 10.8V12M18 12H6" stroke="currentColor" stroke-width="2"/>
       </svg>
-    </a>
+    </div>
   </div>
 
   <div class="div project-case-card__media">
@@ -72,4 +80,4 @@ if ( '' === $portfolio_image_alt ) {
     >
     <?php endif; ?>
   </div>
-</div>
+</a>

@@ -140,7 +140,7 @@ if ( ! function_exists( 'lvl_neva_get_shop_length_options' ) ) {
 	function lvl_neva_get_shop_length_options() {
 		$terms = get_terms(
 			array(
-				'taxonomy'   => 'pa_dlinna',
+				'taxonomy'   => 'pa_dlina',
 				'hide_empty' => true,
 			)
 		);
@@ -222,6 +222,8 @@ if ( ! function_exists( 'lvl_neva_apply_shop_archive_filters' ) ) {
 			return;
 		}
 
+		$query->set( 'posts_per_page', 12 );
+
 		$state = lvl_neva_get_shop_filter_state();
 
 		if ( empty( $state['width'] ) && empty( $state['height'] ) && empty( $state['length'] ) ) {
@@ -257,7 +259,7 @@ if ( ! function_exists( 'lvl_neva_apply_shop_archive_filters' ) ) {
 
 		if ( ! empty( $state['length'] ) ) {
 			$tax_query[] = array(
-				'taxonomy' => 'pa_dlinna',
+				'taxonomy' => 'pa_dlina',
 				'field'    => 'slug',
 				'terms'    => $state['length'],
 			);

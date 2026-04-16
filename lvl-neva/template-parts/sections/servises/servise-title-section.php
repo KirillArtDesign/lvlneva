@@ -15,7 +15,7 @@ $breadcrumb_items          = function_exists( 'lvl_neva_get_breadcrumb_items' ) 
 <section section-dark-theme="" class="section service-hero">
     <div class="div page-cover_component flex-direction-vertical service-hero__cover">
         <div class="div layer-center">
-            <div class="image size-full-percentage ">
+            <div class="image size-full-percentage image-brightness">
                 <?php if ( $service_image_url ) : ?>
                     <img src="<?php echo esc_url( $service_image_url ); ?>" alt="<?php echo esc_attr( $service_image_alt ); ?>"
                         title="<?php echo esc_attr( $service_image_title ); ?>" class="image__img">

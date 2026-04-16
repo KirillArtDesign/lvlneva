@@ -29,15 +29,20 @@ $variation_options         = array();
 $variation_map             = array();
 $selected_option           = '';
 $selected_variation_id     = 0;
+$shop_filter_state         = function_exists( 'lvl_neva_get_shop_filter_state' )
+	? lvl_neva_get_shop_filter_state()
+	: array(
+		'length' => array(),
+	);
 
 if ( $product->is_type( 'variable' ) ) {
 	$variation_attributes = $product->get_variation_attributes();
 
 	if ( ! empty( $variation_attributes ) ) {
-		if ( isset( $variation_attributes['pa_dlinna'] ) ) {
-			$variation_attribute_name = 'pa_dlinna';
-		} elseif ( isset( $variation_attributes['attribute_pa_dlinna'] ) ) {
-			$variation_attribute_name = 'attribute_pa_dlinna';
+		if ( isset( $variation_attributes['pa_dlina'] ) ) {
+			$variation_attribute_name = 'pa_dlina';
+		} elseif ( isset( $variation_attributes['attribute_pa_dlina'] ) ) {
+			$variation_attribute_name = 'attribute_pa_dlina';
 		} else {
 			$variation_attribute_name = array_key_first( $variation_attributes );
 		}
@@ -102,6 +107,14 @@ if ( $product->is_type( 'variable' ) ) {
 			}
 		}
 
+		if (
+			1 === count( $shop_filter_state['length'] )
+			&& isset( $variation_map[ $shop_filter_state['length'][0] ] )
+			&& isset( $variation_options[ $shop_filter_state['length'][0] ] )
+		) {
+			$selected_option = $shop_filter_state['length'][0];
+		}
+
 		if ( '' === $selected_option && ! empty( $variation_options ) ) {
 			$selected_option = array_key_first( $variation_options );
 		}
@@ -117,7 +130,7 @@ if ( $product->is_type( 'variable' ) ) {
 }
 ?>
 
-<div class="collection__item size-height-auto-tablet" role="group">
+<div class="collection__item size-height-auto-tablet " role="group">
 	<div
 		class="div equipments-card_component background-white border-radius equipments-card-adaptive product-archive-card"
 		data-product-archive-card=""
@@ -138,7 +151,7 @@ if ( $product->is_type( 'variable' ) ) {
 				<input type="hidden" name="<?php echo esc_attr( $variation_attribute_input_name ); ?>" value="<?php echo esc_attr( $selected_option ); ?>" data-product-card-attribute-input>
 			<?php endif; ?>
 
-			<div class="div flex-direction-horizontal background-white equipments-card-adaptive__layout">
+			<div class="div flex-direction-horizontal background-white equipments-card-adaptive__layout ">
 				<div class="div padding-block-xlarge equipments-card-adaptive__content">
 					<div class="div flex-direction-vertical size-height-full equipments-card-adaptive__content-inner">
 						<div class="div flex-direction-vertical equipments-card-adaptive__top">

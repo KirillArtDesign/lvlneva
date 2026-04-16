@@ -3,8 +3,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$blog_page_id  = (int) get_option( 'page_for_posts' );
-$blog_page_url = $blog_page_id ? get_permalink( $blog_page_id ) : home_url( '/' );
+$blog_archive_page_ids = get_posts(
+	array(
+		'post_type'      => 'page',
+		'post_status'    => 'publish',
+		'posts_per_page' => 1,
+		'fields'         => 'ids',
+		'meta_key'       => '_wp_page_template',
+		'meta_value'     => 'blog-archive.php',
+	)
+);
+$blog_archive_page_id  = ! empty( $blog_archive_page_ids ) ? (int) $blog_archive_page_ids[0] : 0;
+$blog_page_id          = (int) get_option( 'page_for_posts' );
+$blog_page_url         = $blog_archive_page_id
+	? get_permalink( $blog_archive_page_id )
+	: ( $blog_page_id ? get_permalink( $blog_page_id ) : home_url( '/blog/' ) );
 $latest_posts  = new WP_Query(
 	array(
 		'post_type'           => 'post',

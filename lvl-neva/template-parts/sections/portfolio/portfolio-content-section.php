@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<div class="div flex-direction-vertical grid-gap size-width-full equipment-page_under-slider">
+<div class="div flex-direction-vertical grid-gap size-width-full portfolio-main__content">
 	<div class="div flex-direction-horizontal size-width-full equipment-article">
 		<div class="div flex-direction-vertical size-width-full border-radius equipment-article__card">
 			<div class="div flex-direction-horizontal size-width-full equipment-article__top">
@@ -15,5 +15,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 </div>
-</div>
-</section>

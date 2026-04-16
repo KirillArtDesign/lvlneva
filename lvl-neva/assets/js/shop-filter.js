@@ -116,6 +116,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const replaceArchiveContent = (html) => {
       const parser = new DOMParser();
       const responseDocument = parser.parseFromString(html, "text/html");
+      const replacementArchiveRoot = responseDocument.querySelector(
+        "[data-shop-archive]",
+      );
       const replacementResults = responseDocument.querySelector(
         "[data-shop-filter-results]",
       );
@@ -141,6 +144,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       paginationRoot = archiveRoot.querySelector("[data-shop-filter-pagination]");
+
+      if (replacementArchiveRoot) {
+        archiveRoot.dataset.currentPage =
+          replacementArchiveRoot.dataset.currentPage || "";
+        archiveRoot.dataset.nextPageUrl =
+          replacementArchiveRoot.dataset.nextPageUrl || "";
+      }
 
       document.dispatchEvent(
         new CustomEvent("lvlNevaShopResultsReplaced", {
@@ -207,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const paginationLink = target.closest(
-        "[data-shop-filter-pagination] a.page-numbers",
+        "[data-shop-filter-pagination] a[href]",
       );
 
       if (!(paginationLink instanceof HTMLAnchorElement)) {

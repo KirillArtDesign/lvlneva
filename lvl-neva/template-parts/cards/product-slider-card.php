@@ -33,10 +33,10 @@ if ( $product->is_type( 'variable' ) ) {
 	$variation_attributes = $product->get_variation_attributes();
 
 	if ( ! empty( $variation_attributes ) ) {
-		if ( isset( $variation_attributes['pa_dlinna'] ) ) {
-			$variation_attribute_name = 'pa_dlinna';
-		} elseif ( isset( $variation_attributes['attribute_pa_dlinna'] ) ) {
-			$variation_attribute_name = 'attribute_pa_dlinna';
+		if ( isset( $variation_attributes['pa_dlina'] ) ) {
+			$variation_attribute_name = 'pa_dlina';
+		} elseif ( isset( $variation_attributes['attribute_pa_dlina'] ) ) {
+			$variation_attribute_name = 'attribute_pa_dlina';
 		} else {
 			$variation_attribute_name = array_key_first( $variation_attributes );
 		}

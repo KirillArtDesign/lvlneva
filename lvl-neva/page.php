@@ -1,18 +1,30 @@
 <?php
 get_header();
 ?>
-<main class="site-main">
+
 	<?php if ( have_posts() ) : ?>
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
 			<?php get_template_part( 'template-parts/sections/shared/page-title-section' ); ?>
-			<article <?php post_class( 'content-card' ); ?>>
-				<div class="entry-content">
-					<?php the_content(); ?>
+			<section class="section section-services-page background-light-grey">
+				<div class="div padding-global size-height-auto-tablet services-page_padding">
+					<div class="div flex-direction-horizontal size-width-full equipment-article">
+						<article <?php post_class( 'div flex-direction-vertical size-width-full page-default__card' ); ?>>
+							<div class="div flex-direction-horizontal size-width-full equipment-article__top">
+								<div class="div flex-direction-vertical size-width-full equipment-article__content">
+									<div class="div flex-direction-vertical size-width-full equipment-article__section">
+										<div class="equipment-article__text page-default__content">
+											<?php the_content(); ?>
+										</div>
+									</div>
+								</div>
+							</div>
+						</article>
+					</div>
 				</div>
-			</article>
+			</section>
 		<?php endwhile; ?>
 	<?php endif; ?>
-</main>
+
 <?php
 get_footer();

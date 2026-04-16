@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once get_template_directory() . '/inc/breadcrumbs.php';
+require_once get_template_directory() . '/inc/archive-pages.php';
 require_once get_template_directory() . '/inc/article-content.php';
 require_once get_template_directory() . '/inc/listing-pagination.php';
 require_once get_template_directory() . '/inc/content-filter.php';
@@ -12,8 +13,12 @@ require_once get_template_directory() . '/inc/search-drawer.php';
 require_once get_template_directory() . '/inc/cart-drawer.php';
 require_once get_template_directory() . '/inc/contact-form.php';
 require_once get_template_directory() . '/inc/contact-drawer.php';
+require_once get_template_directory() . '/inc/cookie-notice.php';
 require_once get_template_directory() . '/inc/image-block.php';
 require_once get_template_directory() . '/inc/video-block.php';
+require_once get_template_directory() . '/inc/site-logo.php';
+require_once get_template_directory() . '/inc/woocommerce-import.php';
+require_once get_template_directory() . '/inc/svg-support.php';
 
 function lvl_neva_setup() {
 	add_theme_support( 'title-tag' );

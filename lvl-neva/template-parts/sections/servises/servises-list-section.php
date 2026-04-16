@@ -23,7 +23,7 @@ foreach ( $service_terms as $service_term ) :
 			'post_status'    => 'publish',
 			'posts_per_page' => -1,
 			'orderby'        => 'date',
-			'order'          => 'DESC',
+			'order'          => 'ASC',
 			'tax_query'      => array(
 				array(
 					'taxonomy' => 'services-type',
@@ -39,7 +39,7 @@ foreach ( $service_terms as $service_term ) :
 		continue;
 	}
 	?>
-	<section class="section section-full-screen section-services-page">
+	<section class="section  section-services-page">
 		<div class="div padding-global size-height-auto-tablet size-height-full services-page_padding">
 			<div class="div grid-4 services-card_component--height-full grid-4--is-services-layout">
 				<h2 class="text heading-style-h4 text-color-grey text--u-irj2o420v hide-on-mobile">

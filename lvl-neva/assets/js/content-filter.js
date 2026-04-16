@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const formData = new URLSearchParams();
       const selectedTerm = input.value || "all";
       const archiveUrl = section.dataset.archiveUrl || "";
+      const stateUrl = archiveUrl
+        ? new URL(archiveUrl, window.location.origin)
+        : null;
 
       section.classList.add("is-loading");
 
@@ -69,6 +72,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (currentResults && replacementHtml) {
           currentResults.outerHTML = replacementHtml;
+
+          if (stateUrl && window.history?.replaceState) {
+            if (selectedTerm === "all") {
+              stateUrl.searchParams.delete("content_filter_term");
+            } else {
+              stateUrl.searchParams.set("content_filter_term", selectedTerm);
+            }
+
+            window.history.replaceState({}, "", stateUrl.toString());
+          }
+
           document.dispatchEvent(
             new CustomEvent("lvlNevaResultsReplaced", {
               detail: { section },

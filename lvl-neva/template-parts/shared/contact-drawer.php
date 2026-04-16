@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		data-contact-drawer-panel
 		aria-hidden="true"
 	>
-		<div class="div flex-direction-horizontal site-contact-drawer__mobile-head">
+		<div class="div flex-direction-horizontal site-contact-drawer__mobile-head site-contact-drawer__mobile-head--mobile-only">
 			<div class="site-contact-drawer__mobile-title"><?php esc_html_e( 'Связаться с нами', 'lvl-neva' ); ?></div>
 
 			<button

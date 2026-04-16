@@ -37,8 +37,7 @@ if ( ! function_exists( 'lvl_neva_get_primary_menu_items' ) ) {
 
 $primary_menu_items  = lvl_neva_get_primary_menu_items();
 $shop_archive_url    = function_exists( 'lvl_neva_get_shop_archive_url' ) ? lvl_neva_get_shop_archive_url() : home_url( '/' );
-$services_archive_id = function_exists( 'lvl_neva_get_archive_page_for_post_type' ) ? lvl_neva_get_archive_page_for_post_type( 'services' ) : 0;
-$services_archive_url = $services_archive_id ? get_permalink( $services_archive_id ) : home_url( '/' );
+$services_archive_url = function_exists( 'lvl_neva_get_archive_url_for_post_type' ) ? lvl_neva_get_archive_url_for_post_type( 'services' ) : home_url( '/' );
 $site_phone          = function_exists( 'get_field' ) ? trim( (string) get_field( 'nomer_telefona', 'option' ) ) : '';
 $site_email          = function_exists( 'get_field' ) ? trim( (string) get_field( 'pochta', 'option' ) ) : '';
 $cart_count_badge    = function_exists( 'lvl_neva_render_cart_drawer_count_badge' ) ? lvl_neva_render_cart_drawer_count_badge() : '';
@@ -90,17 +89,14 @@ if ( ! $transparent_header ) {
 							<div class="flex-direction-horizontal size-width-auto">
 								<a class="link-block logo_component" data-action-element="" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 									<div class="flex-direction-horizontal flex-align-center logo_gap">
-										<div class="logo_img border-radius background-light-grey text-color-black">
+										<div class="logo_img border-radius">
 											<div class="embed icon_full flex-center-all">
-												<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<rect width="40" height="40" rx="3" fill="white" />
-													<path d="M19.7773 8.2959L12.8887 13.4443L12.8516 32.0928L19.7959 32.083L19.7773 34.1484H6V15.9258L19.7773 6V8.2959ZM24.5186 9.11133V34.1484H20.2217V6L24.5186 9.11133ZM29.2588 12.5186V34.1484H24.9629V9.40723L29.2588 12.5186ZM34 15.9258V34.1475H29.7041V12.8145L34 15.9258Z" fill="#31572C" />
-												</svg>
+												<?php echo lvl_neva_get_logo_icon_svg(); ?>
 											</div>
 										</div>
-										<div class="logo_text">
+										<div class="logo_text show-on-desktop">
 											<div class="embed logo_text-svg flex-align-center flex-direction-horizontal">
-												<span class="text heading-style-h6 text-color-white">LVL Neva</span>
+												<?php echo lvl_neva_get_logo_text_svg(); ?>
 											</div>
 										</div>
 									</div>
@@ -253,17 +249,14 @@ if ( ! $transparent_header ) {
 						<div class="div flex-direction-horizontal space-between mobile-menu-v2__top">
 							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" data-action-element="" class="link-block logo_component mobile-menu-v2__logo">
 								<div class="div flex-direction-horizontal flex-align-center mobile-menu-v2__logo-row">
-									<div class="div logo_img border-radius background-brand mobile-menu-v2__logo-icon">
-										<div class="embed icon_full text-color-white flex-center-all">
-											<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<rect width="30" height="30" rx="2.25" fill="#31572C" />
-												<path d="M14.8329 6.22128L9.66687 10.0826L9.63855 24.068L14.8475 24.0611L14.8329 25.61H4.49988V11.943L14.8329 4.4996V6.22128ZM18.3885 6.83261V25.61H15.1659V4.4996L18.3885 6.83261ZM21.9442 9.38828V25.61H18.7225V7.05527L21.9442 9.38828ZM25.5009 11.9439V25.61H22.2782V9.61093L25.5009 11.9439Z" fill="white" />
-											</svg>
+									<div class="div logo_img border-radius mobile-menu-v2__logo-icon">
+										<div class="embed icon_full flex-center-all">
+											<?php echo lvl_neva_get_logo_icon_svg(); ?>
 										</div>
 									</div>
 									<div class="div logo_text mobile-menu-v2__logo-text">
 										<div class="embed logo_text-svg flex-direction-horizontal flex-align-center">
-											<span class="text heading-style-h6">LVL Neva</span>
+											<?php echo lvl_neva_get_logo_text_svg(); ?>
 										</div>
 									</div>
 								</div>

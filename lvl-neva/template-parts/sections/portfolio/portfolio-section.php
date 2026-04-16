@@ -12,8 +12,7 @@ $portfolio_section_query = new WP_Query(
 		'order'          => 'DESC',
 	)
 );
-$portfolio_archive_page_id = function_exists( 'lvl_neva_get_archive_page_for_post_type' ) ? lvl_neva_get_archive_page_for_post_type( 'portfolio' ) : 0;
-$portfolio_archive_url     = $portfolio_archive_page_id ? get_permalink( $portfolio_archive_page_id ) : '';
+$portfolio_archive_url = function_exists( 'lvl_neva_get_archive_url_for_post_type' ) ? lvl_neva_get_archive_url_for_post_type( 'portfolio' ) : '';
 ?>
 
 <section class="section  section-services-page background-light-grey">

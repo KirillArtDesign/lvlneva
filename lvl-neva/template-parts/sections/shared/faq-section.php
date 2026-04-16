@@ -54,7 +54,11 @@ $faq_section_id = 'faq-' . get_the_ID();
 										id="<?php echo esc_attr( $faq_trigger_id ); ?>"
 									>
 										<div class="faq-accordion__title">
-											<?php echo esc_html( $faq_question ); ?>
+											<span class="nav-btn faq-accordion__title-roll">
+												<span class="nav-btn__label" data-label="<?php echo esc_attr( $faq_question ); ?>">
+													<span class="nav-btn__label-text"><?php echo esc_html( $faq_question ); ?></span>
+												</span>
+											</span>
 										</div>
 
 										<div class="faq-accordion__icon-wrap">

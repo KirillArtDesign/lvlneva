@@ -70,18 +70,14 @@ if ( ! $privacy_policy_label ) {
 						<div class="div grid-4_col">
 							<a class="link-block logo_component" data-action-element="" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 								<div class="div flex-direction-horizontal flex-align-center logo_gap">
-									<div class="div logo_img border-radius background-brand">
-										<div class="embed icon_full text-color-white flex-center-all">
-											<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<rect x="0.4" y="0.4" width="39.2" height="39.2" rx="2.6" fill="#31572C" />
-												<rect x="0.4" y="0.4" width="39.2" height="39.2" rx="2.6" stroke="#31572C" stroke-width="0.8" />
-												<path d="M19.7773 8.2959L12.8887 13.4443L12.8516 32.0928L19.7959 32.083L19.7773 34.1484H6V15.9258L19.7773 6V8.2959ZM24.5186 9.11133V34.1484H20.2217V6L24.5186 9.11133ZM29.2588 12.5186V34.1484H24.9629V9.40723L29.2588 12.5186ZM34 15.9258V34.1475H29.7041V12.8145L34 15.9258Z" fill="white" />
-											</svg>
+									<div class="div logo_img border-radius">
+										<div class="embed icon_full flex-center-all">
+											<?php echo lvl_neva_get_logo_icon_svg(); ?>
 										</div>
 									</div>
 									<div class="div logo_text">
 										<div class="embed logo_text-svg flex-direction-horizontal flex-align-center">
-											<span class="text heading-style-h6">LVL Neva</span>
+											<?php echo lvl_neva_get_logo_text_svg(); ?>
 										</div>
 									</div>
 								</div>
@@ -168,7 +164,7 @@ if ( ! $privacy_policy_label ) {
 						</div>
 						<div class="div grid-4_col grid_col-padding-left div--u-iekexfzrk">
 							<div class="div flex-direction-horizontal footer_gap-xxsmall flex-align-center">
-								<a class="roll-link text-style-body" href="<?php echo esc_url( $developer_url ); ?>" target="_blank" rel="noopener noreferrer" data-label="Разработка сайта">
+								<a class="roll-link text-style-body " href="<?php echo esc_url( $developer_url ); ?>" target="_blank" rel="noopener noreferrer" data-label="Разработка сайта">
 									<span class="roll-link__text">Разработка сайта</span>
 								</a>
 							</div>

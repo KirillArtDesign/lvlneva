@@ -9,13 +9,13 @@ $portfolio_characteristics = get_field('harakteristiki_proekta');
 $portfolio_gallery = is_array($portfolio_gallery) ? $portfolio_gallery : array();
 $portfolio_characteristics = is_array($portfolio_characteristics) ? $portfolio_characteristics : array();
 ?>
-<section class="section section-equipment padding-global" style="padding-bottom: 8rem;">
+<section class="section section-equipment">
     <div class="div flex-direction-vertical grid-gap size-width-full">
 
-        <div class="div flex-direction-horizontal grid-gap flex-direction-horizontal--is-equipment-page page-layout-3-2"
+        <div class="div flex-direction-horizontal grid-gap flex-direction-horizontal--is-equipment-page page-layout-3-2 padding-global"
            >
 
-            <div class="div equipment-page_slider_component">
+            <div class="div flex-direction-vertical grid-gap equipment-page_slider_component">
                 <div class="div flex-direction-vertical equipment-page_slider_gap">
                     <div class="div equipment-page_slider_preview background-white border-radius">
                         <div equipment-slider="preview" class="div swiper swiper-initialized swiper-horizontal"
@@ -145,12 +145,14 @@ $portfolio_characteristics = is_array($portfolio_characteristics) ? $portfolio_c
                         </div>
                     </div>
                 </div>
+
+                <?php get_template_part( 'template-parts/sections/portfolio/portfolio-content-section' ); ?>
             </div>
 
-            <div class="div flex-direction-vertical grid-gap div--u-iy6idvb8v">
-                <div class="div background-white border-radius equipment-page_title_component sticky sticky-padding"
+            <div class="div flex-direction-vertical grid-gap div--u-iy6idvb8v portfolio-main__sidebar">
+                <div class="div background-white border-radius equipment-page_title_component sticky sticky-padding portfolio-main__sidebar-card"
                    >
-                    <div class="div size-width-auto padding-block-large padding-block-large--is-equipment-title"
+                    <div class="div size-width-auto padding-block-large padding-block-large--is-equipment-title portfolio-main__sidebar-inner"
                        >
                         <div class="div flex-direction-vertical equipment-page_title_gap">
                             <div class="div flex-direction-vertical size-width-full tech-specs">
@@ -175,7 +177,7 @@ $portfolio_characteristics = is_array($portfolio_characteristics) ? $portfolio_c
                                 <?php endforeach; ?>
                             </div>
 
-                            <button class="hero-corner-roll-btn hero-corner-roll-btn--brand hero-corner-roll-btn--h100"
+                            <button class="hero-corner-roll-btn hero-corner-roll-btn--brand hero-corner-roll-btn--h100 portfolio-main__sidebar-cta"
                                 data-action-element="" data-contact-drawer-open aria-controls="site-contact-drawer-panel" aria-expanded="false" gsap-elements-scroll-animation="" type="button">
                                 <span class="hero-corner-roll-btn__label" data-label="Хочу так же">
                                     <span class="hero-corner-roll-btn__label-text">Хочу так же</span>

@@ -12,7 +12,6 @@ get_header();
 
 		<?php get_template_part( 'template-parts/sections/shared/page-title-section' ); ?>
 		<?php get_template_part( 'template-parts/sections/portfolio/portfolio-main-section' ); ?>
-		<?php get_template_part( 'template-parts/sections/portfolio/portfolio-content-section' ); ?>
         <?php get_template_part( 'template-parts/sections/portfolio/portfolio-servises-section' ); ?>
 
         
