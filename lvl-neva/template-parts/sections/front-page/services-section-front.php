@@ -11,6 +11,10 @@ $allowed_title_html_tags = array(
 	'br' => array(),
 );
 $services_block_title_plain = wp_strip_all_tags( (string) $services_block_title );
+$services_block_image_full   = lvl_neva_get_field_image_url( $services_block_image, 'full' );
+$services_block_image_large  = lvl_neva_get_field_image_url( $services_block_image, 'large' );
+$services_block_image_medium = lvl_neva_get_field_image_url( $services_block_image, 'medium_large' );
+$services_block_image_small  = lvl_neva_get_field_image_url( $services_block_image, 'large' );
 ?>
 
 <section class="section section-services" data-services-section="">
@@ -22,23 +26,30 @@ $services_block_title_plain = wp_strip_all_tags( (string) $services_block_title 
 					data-services-image=""
 				 style="width: 100%; height: 100%">
 					<img alt="<?php echo esc_attr( $services_block_image['alt'] ); ?>" class="image__img"
-						data-origin-src="<?php echo esc_url( $services_block_image['url'] ); ?>"
+						data-origin-src="<?php echo esc_url( $services_block_image_full ? $services_block_image_full : $services_block_image['url'] ); ?>"
 						data-size="<?php echo esc_attr( $services_block_image['width'] . 'x' . $services_block_image['height'] ); ?>"
-					 src="<?php echo esc_url( $services_block_image['url'] ); ?>"
+					 src="<?php echo esc_url( $services_block_image_large ? $services_block_image_large : $services_block_image['url'] ); ?>"
+					 loading="eager"
+					 fetchpriority="high"
+					 decoding="async"
 						title="<?php echo esc_attr( $services_block_image['title'] ); ?>" />
 				</div>
 				<div class="image size-full-percentage show-on-tablet-2">
 					<img alt="<?php echo esc_attr( $services_block_image['alt'] ); ?>" class="image__img"
-						data-origin-src="<?php echo esc_url( $services_block_image['url'] ); ?>"
+						data-origin-src="<?php echo esc_url( $services_block_image_full ? $services_block_image_full : $services_block_image['url'] ); ?>"
 						data-size="<?php echo esc_attr( $services_block_image['width'] . 'x' . $services_block_image['height'] ); ?>"
-					 src="<?php echo esc_url( $services_block_image['url'] ); ?>"
+					 src="<?php echo esc_url( $services_block_image_medium ? $services_block_image_medium : $services_block_image_large ); ?>"
+					 loading="eager"
+					 decoding="async"
 						title="<?php echo esc_attr( $services_block_image['title'] ); ?>" />
 				</div>
 				<div class="image size-full-percentage show-on-mobile">
 					<img alt="<?php echo esc_attr( $services_block_image['alt'] ); ?>" class="image__img"
-						data-origin-src="<?php echo esc_url( $services_block_image['url'] ); ?>"
+						data-origin-src="<?php echo esc_url( $services_block_image_full ? $services_block_image_full : $services_block_image['url'] ); ?>"
 						data-size="<?php echo esc_attr( $services_block_image['width'] . 'x' . $services_block_image['height'] ); ?>"
-					 src="<?php echo esc_url( $services_block_image['url'] ); ?>"
+					 src="<?php echo esc_url( $services_block_image_small ? $services_block_image_small : $services_block_image_large ); ?>"
+					 loading="eager"
+					 decoding="async"
 						title="<?php echo esc_attr( $services_block_image['title'] ); ?>" />
 				</div>
 			<?php endif; ?>
@@ -57,8 +68,7 @@ $services_block_title_plain = wp_strip_all_tags( (string) $services_block_title 
 		</div>
 	</div>
 	<div class="div div--u-izkhs27qx grid-2 gap-0 section-services_scroll-content size-height-full"
-		data-services-scroll-content=""
-		id="izkhs27qx_0">
+		data-services-scroll-content="">
 		<div class="div sticky size-full-screen section-services_sticky hide-on-tablet"
 		>
 			<div class="div padding-block-large size-height-full padding-block-large--is-services-top"

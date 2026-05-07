@@ -5,24 +5,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $about_title       = get_field( 'about_zagolovok' );
 $about_description = get_field( 'about_opisanie' );
-$about_page_ids    = get_posts(
-	array(
-		'post_type'      => 'page',
-		'post_status'    => 'publish',
-		'posts_per_page' => 1,
-		'fields'         => 'ids',
-		'meta_key'       => '_wp_page_template',
-		'meta_value'     => 'about-page.php',
-	)
-);
-$about_page_url    = ! empty( $about_page_ids ) ? get_permalink( (int) $about_page_ids[0] ) : home_url( '/about/' );
-$allowed_description_html_tags = array(
+$allowed_about_html_tags = array(
 	'br' => array(),
 );
 
 ?>
 
-<section class="section section-about">
+<section class="section section-about" >
 
     <div class="div padding-global section-about_padding">
         <div class="div flex-direction-vertical section-about_gap-xlarge">
@@ -32,7 +21,7 @@ $allowed_description_html_tags = array(
                 </h2>
                 <div class="div grid_col-padding-left div--u-ilzpox96w">
                     <h3 class="text heading-style-h2 text--u-ilv3qk1pz">
-                        <?php echo esc_html( $about_title ); ?>
+                        <?php echo wp_kses( $about_title, $allowed_about_html_tags ); ?>
                     </h3>
                 </div>
                 <div class="div" style="grid-column: 3 / 5;grid-row: 2 / 3;">
@@ -43,37 +32,14 @@ $allowed_description_html_tags = array(
                             <div class="tt-rich-text text-style-body text-color-grey" gsap-opacity-scroll-animation=""
                                 rich-text="about" style="opacity: 1">
                                 <div class="text-block-wrap-div">
-                                    <p><?php echo wp_kses( $about_description, $allowed_description_html_tags ); ?></p>
+                                    <p><?php echo wp_kses( $about_description, $allowed_about_html_tags ); ?></p>
                                 </div>
                             </div>
                         </div>
                         <div class="card-wrapper border-radius">
 
 
-                            <a class="hero-corner-roll-btn hero-corner-roll-btn--brand hero-corner-roll-btn--h100"
-                                data-action-element="" gsap-elements-scroll-animation="" href="<?php echo esc_url( $about_page_url ); ?>">
-                                <span class="hero-corner-roll-btn__label" data-label="Подробнее о компании">
-                                    <span class="hero-corner-roll-btn__label-text">Подробнее о компании</span>
-                                </span>
-                                <span class="hero-corner-roll-btn__icon-slot" aria-hidden="true">
-                                    <span class="hero-corner-roll-btn__icon-roll">
-                                        <svg class="hero-corner-roll-btn__icon hero-corner-roll-btn__icon--default"
-                                            fill="none" height="24" viewbox="0 0 24 24" width="24"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M18.5 10.3809V13.6191L13.3115 18.7139L11.9102 17.2861L16.2764 13H5.5V11H16.2764L11.9102 6.71387L13.3115 5.28613L18.5 10.3809Z"
-                                                fill="currentColor"></path>
-                                        </svg>
-                                        <svg class="hero-corner-roll-btn__icon hero-corner-roll-btn__icon--hover"
-                                            fill="none" height="24" viewbox="0 0 24 24" width="24"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M18.5 10.3809V13.6191L13.3115 18.7139L11.9102 17.2861L16.2764 13H5.5V11H16.2764L11.9102 6.71387L13.3115 5.28613L18.5 10.3809Z"
-                                                fill="currentColor"></path>
-                                        </svg>
-                                    </span>
-                                </span>
-                            </a>
+                            
 
 
                         </div>

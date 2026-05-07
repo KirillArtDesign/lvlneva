@@ -6,9 +6,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 $service_title             = get_the_title();
 $service_short_description = get_field( 'kratkoe_opisanie_uslugi', get_the_ID() );
 $service_image_id          = get_post_thumbnail_id();
-$service_image_url         = $service_image_id ? get_the_post_thumbnail_url( get_the_ID(), 'full' ) : '';
 $service_image_alt         = $service_image_id ? get_post_meta( $service_image_id, '_wp_attachment_image_alt', true ) : '';
 $service_image_title       = $service_image_id ? get_the_title( $service_image_id ) : '';
+$service_image_html        = $service_image_id
+	? wp_get_attachment_image(
+		$service_image_id,
+		'large',
+		false,
+		array(
+			'class'         => 'image__img',
+			'alt'           => $service_image_alt,
+			'title'         => $service_image_title,
+			'loading'       => 'eager',
+			'fetchpriority' => 'high',
+			'decoding'      => 'async',
+			'sizes'         => '100vw',
+		)
+	)
+	: '';
 $breadcrumb_items          = function_exists( 'lvl_neva_get_breadcrumb_items' ) ? lvl_neva_get_breadcrumb_items() : array();
 ?>
 
@@ -16,9 +31,8 @@ $breadcrumb_items          = function_exists( 'lvl_neva_get_breadcrumb_items' ) 
     <div class="div page-cover_component flex-direction-vertical service-hero__cover">
         <div class="div layer-center">
             <div class="image size-full-percentage image-brightness">
-                <?php if ( $service_image_url ) : ?>
-                    <img src="<?php echo esc_url( $service_image_url ); ?>" alt="<?php echo esc_attr( $service_image_alt ); ?>"
-                        title="<?php echo esc_attr( $service_image_title ); ?>" class="image__img">
+                <?php if ( $service_image_html ) : ?>
+                    <?php echo $service_image_html; ?>
                 <?php endif; ?>
             </div>
         </div>

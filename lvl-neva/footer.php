@@ -164,7 +164,7 @@ if ( ! $privacy_policy_label ) {
 						</div>
 						<div class="div grid-4_col grid_col-padding-left div--u-iekexfzrk">
 							<div class="div flex-direction-horizontal footer_gap-xxsmall flex-align-center">
-								<a class="roll-link text-style-body " href="<?php echo esc_url( $developer_url ); ?>" target="_blank" rel="noopener noreferrer" data-label="Разработка сайта">
+								<a class="roll-link text-style-body" href="<?php echo esc_url( $developer_url ); ?>" target="_blank" rel="noopener noreferrer" data-label="Разработка сайта">
 									<span class="roll-link__text">Разработка сайта</span>
 								</a>
 							</div>

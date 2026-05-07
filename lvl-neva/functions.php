@@ -15,6 +15,7 @@ require_once get_template_directory() . '/inc/contact-form.php';
 require_once get_template_directory() . '/inc/contact-drawer.php';
 require_once get_template_directory() . '/inc/cookie-notice.php';
 require_once get_template_directory() . '/inc/image-block.php';
+require_once get_template_directory() . '/inc/gallery-slider-block.php';
 require_once get_template_directory() . '/inc/video-block.php';
 require_once get_template_directory() . '/inc/site-logo.php';
 require_once get_template_directory() . '/inc/woocommerce-import.php';
@@ -172,6 +173,144 @@ function lvl_neva_disable_add_to_cart_notice( $message ) {
 }
 add_filter( 'wc_add_to_cart_message_html', 'lvl_neva_disable_add_to_cart_notice' );
 
+function lvl_neva_add_font_resource_hints( $urls, $relation_type ) {
+	if ( 'preconnect' === $relation_type ) {
+		$urls[] = 'https://fonts.googleapis.com';
+		$urls[] = array(
+			'href'        => 'https://fonts.gstatic.com',
+			'crossorigin' => 'anonymous',
+		);
+	}
+
+	return $urls;
+}
+add_filter( 'wp_resource_hints', 'lvl_neva_add_font_resource_hints', 10, 2 );
+
+function lvl_neva_preload_theme_fonts() {
+	$font_uri = trailingslashit( get_template_directory_uri() ) . 'assets/fonts/BebasNeue.woff2';
+	?>
+	<link rel="preload" href="<?php echo esc_url( $font_uri ); ?>" as="font" type="font/woff2" crossorigin>
+	<?php
+}
+add_action( 'wp_head', 'lvl_neva_preload_theme_fonts', 1 );
+
+function lvl_neva_has_gallery_slider_block_in_current_request() {
+	if ( ! function_exists( 'has_block' ) ) {
+		return false;
+	}
+
+	$post_id = get_queried_object_id();
+
+	if ( ! $post_id ) {
+		return false;
+	}
+
+	return has_block( 'lvl-neva/gallery-slider', $post_id );
+}
+
+function lvl_neva_string_has_legacy_design_hashes( $value ) {
+	return is_string( $value ) && '' !== $value && 1 === preg_match( '/--(?:u|s2)-[A-Za-z0-9_-]+/', $value );
+}
+
+function lvl_neva_value_has_legacy_design_hashes( $value ) {
+	if ( is_string( $value ) ) {
+		return lvl_neva_string_has_legacy_design_hashes( $value );
+	}
+
+	if ( is_array( $value ) ) {
+		foreach ( $value as $item ) {
+			if ( lvl_neva_value_has_legacy_design_hashes( $item ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	if ( is_object( $value ) ) {
+		if ( $value instanceof WP_Post ) {
+			return lvl_neva_value_has_legacy_design_hashes( $value->post_content );
+		}
+
+		foreach ( get_object_vars( $value ) as $item ) {
+			if ( lvl_neva_value_has_legacy_design_hashes( $item ) ) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+function lvl_neva_get_current_acf_legacy_contexts() {
+	$contexts       = array();
+	$queried_object = get_queried_object();
+
+	if ( $queried_object instanceof WP_Post ) {
+		$contexts[] = $queried_object->ID;
+	} elseif ( $queried_object instanceof WP_Term ) {
+		$contexts[] = $queried_object->taxonomy . '_' . $queried_object->term_id;
+	} elseif ( $queried_object instanceof WP_User ) {
+		$contexts[] = 'user_' . $queried_object->ID;
+	}
+
+	$contexts[] = 'option';
+
+	return array_values( array_unique( array_filter( $contexts ) ) );
+}
+
+function lvl_neva_current_request_has_legacy_design_hashes() {
+	static $has_legacy_hashes = null;
+
+	if ( null !== $has_legacy_hashes ) {
+		return $has_legacy_hashes;
+	}
+
+	$has_legacy_hashes = false;
+
+	if ( is_admin() ) {
+		return $has_legacy_hashes;
+	}
+
+	$queried_object = get_queried_object();
+
+	if ( $queried_object instanceof WP_Post && lvl_neva_string_has_legacy_design_hashes( (string) $queried_object->post_content ) ) {
+		$has_legacy_hashes = true;
+		return $has_legacy_hashes;
+	}
+
+	if ( ! function_exists( 'get_fields' ) ) {
+		return $has_legacy_hashes;
+	}
+
+	foreach ( lvl_neva_get_current_acf_legacy_contexts() as $context ) {
+		$fields = get_fields( $context, false );
+
+		if ( $fields && lvl_neva_value_has_legacy_design_hashes( $fields ) ) {
+			$has_legacy_hashes = true;
+			break;
+		}
+	}
+
+	return $has_legacy_hashes;
+}
+
+function lvl_neva_should_enqueue_swiper_assets() {
+	if ( is_admin() ) {
+		return false;
+	}
+
+	if (
+		is_front_page()
+		|| is_page_template( 'about-page.php' )
+		|| is_singular( array( 'product', 'portfolio', 'services' ) )
+	) {
+		return true;
+	}
+
+	return lvl_neva_has_gallery_slider_block_in_current_request();
+}
+
 function lvl_neva_enqueue_assets() {
 	$theme_version = wp_get_theme()->get( 'Version' );
 	$css_dir       = trailingslashit( get_template_directory() ) . 'assets/css/';
@@ -179,27 +318,35 @@ function lvl_neva_enqueue_assets() {
 	$fonts_uri     = trailingslashit( get_template_directory_uri() ) . 'assets/fonts/';
 	$js_dir        = trailingslashit( get_template_directory() ) . 'assets/js/';
 	$js_uri        = trailingslashit( get_template_directory_uri() ) . 'assets/js/';
-	$css_priority  = array(
+	$google_fonts  = 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap';
+	$css_files     = array(
 		'main.css',
-		'tt_default_styles.css',
+		'tt_default.css',
 		'tokens.css',
-		'ms_site_default.css',
-		// 'styles-inline.css',
+		'default.css',
 		'shared-design-styles.css',
-		
+		'styles-inline-legacy.css',
+		'styles-inline.css',
 	);
 	$js_priority   = array(
 		'do.js',
 		'app.js',
 	);
-	$queued_css    = array();
 	$queued_js     = array();
 	$previous_css  = 'lvl-neva-style';
 	$previous_js   = '';
 
-	wp_enqueue_style( 'lvl-neva-style', get_stylesheet_uri(), array(), $theme_version );
+	wp_enqueue_style( 'lvl-neva-google-fonts', $google_fonts, array(), null );
+	wp_enqueue_style( 'lvl-neva-style', get_stylesheet_uri(), array( 'lvl-neva-google-fonts' ), $theme_version );
 
-	foreach ( $css_priority as $file_name ) {
+	wp_add_inline_style(
+		'lvl-neva-style',
+		"@font-face{font-family:'BebasNeue';font-style:normal;font-weight:400;font-display:block;src:url('{$fonts_uri}BebasNeue.woff2') format('woff2'),url('{$fonts_uri}BebasNeue.woff') format('woff');}" .
+		"@font-face{font-family:'BebasNeue Bold';font-style:normal;font-weight:700;font-display:block;src:url('{$fonts_uri}BebasNeue.woff2') format('woff2'),url('{$fonts_uri}BebasNeue.woff') format('woff');}" .
+		"@font-face{font-family:'Bebas Neue Cyrillic';font-style:normal;font-weight:400;font-display:block;src:url('{$fonts_uri}BebasNeue.woff2') format('woff2'),url('{$fonts_uri}BebasNeue.woff') format('woff');}"
+	);
+
+	foreach ( $css_files as $file_name ) {
 		$file_path = $css_dir . $file_name;
 
 		if ( ! file_exists( $file_path ) ) {
@@ -216,51 +363,28 @@ function lvl_neva_enqueue_assets() {
 		);
 
 		$previous_css = $handle;
-		$queued_css[] = $file_name;
 	}
 
-	$all_css_files = glob( $css_dir . '*.css' );
+	if ( lvl_neva_should_enqueue_swiper_assets() ) {
+		$swiper_css_path = $css_dir . 'swiper-bundle.min.css';
 
-	if ( false !== $all_css_files ) {
-		natsort( $all_css_files );
-
-		foreach ( $all_css_files as $file_path ) {
-			$file_name = basename( $file_path );
-
-			if ( 0 === strpos( $file_name, 'editor-' ) ) {
-				continue;
-			}
-
-			if ( in_array( $file_name, $queued_css, true ) ) {
-				continue;
-			}
-
-			$handle = 'lvl-neva-css-' . sanitize_title( pathinfo( $file_name, PATHINFO_FILENAME ) );
-
+		if ( file_exists( $swiper_css_path ) ) {
 			wp_enqueue_style(
-				$handle,
-				$css_uri . $file_name,
+				'lvl-neva-css-swiper-bundle-min',
+				$css_uri . 'swiper-bundle.min.css',
 				array( $previous_css ),
-				(string) filemtime( $file_path )
+				(string) filemtime( $swiper_css_path )
 			);
-
-			$previous_css = $handle;
 		}
+
+		wp_enqueue_script(
+			'lvl-neva-swiper',
+			'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js',
+			array(),
+			'12.0.0',
+			true
+		);
 	}
-
-	wp_add_inline_style(
-		$previous_css,
-		"@font-face{font-family:'BebasNeue';font-style:normal;font-weight:400;src:url('{$fonts_uri}BebasNeue.woff2') format('woff2'),url('{$fonts_uri}BebasNeue.woff') format('woff');}" .
-		"@font-face{font-family:'BebasNeue Bold';font-style:normal;font-weight:700;src:url('{$fonts_uri}BebasNeue.woff2') format('woff2'),url('{$fonts_uri}BebasNeue.woff') format('woff');}"
-	);
-
-	wp_enqueue_script(
-		'lvl-neva-swiper',
-		'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js',
-		array(),
-		'12.0.0',
-		true
-	);
 
 	foreach ( $js_priority as $file_name ) {
 		$file_path = $js_dir . $file_name;
@@ -362,6 +486,84 @@ function lvl_neva_enqueue_assets() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'lvl_neva_enqueue_assets' );
+
+if ( ! function_exists( 'lvl_neva_get_field_image_id' ) ) {
+	function lvl_neva_get_field_image_id( $image ) {
+		if ( is_numeric( $image ) ) {
+			return (int) $image;
+		}
+
+		if ( is_array( $image ) && ! empty( $image['ID'] ) ) {
+			return (int) $image['ID'];
+		}
+
+		return 0;
+	}
+}
+
+if ( ! function_exists( 'lvl_neva_get_field_image_url' ) ) {
+	function lvl_neva_get_field_image_url( $image, $size = 'large' ) {
+		$image_id = lvl_neva_get_field_image_id( $image );
+
+		if ( $image_id ) {
+			$image_url = wp_get_attachment_image_url( $image_id, $size );
+
+			if ( $image_url ) {
+				return (string) $image_url;
+			}
+		}
+
+		if ( is_array( $image ) ) {
+			if ( ! empty( $image['sizes'][ $size ] ) ) {
+				return (string) $image['sizes'][ $size ];
+			}
+
+			if ( ! empty( $image['url'] ) ) {
+				return (string) $image['url'];
+			}
+		}
+
+		return '';
+	}
+}
+
+if ( ! function_exists( 'lvl_neva_get_field_image_html' ) ) {
+	function lvl_neva_get_field_image_html( $image, $size = 'large', $attr = array() ) {
+		$image_id = lvl_neva_get_field_image_id( $image );
+
+		if ( is_array( $image ) ) {
+			if ( ! isset( $attr['alt'] ) && isset( $image['alt'] ) ) {
+				$attr['alt'] = (string) $image['alt'];
+			}
+
+			if ( ! isset( $attr['title'] ) && isset( $image['title'] ) ) {
+				$attr['title'] = (string) $image['title'];
+			}
+		}
+
+		if ( $image_id ) {
+			return wp_get_attachment_image( $image_id, $size, false, $attr );
+		}
+
+		$image_url = lvl_neva_get_field_image_url( $image, $size );
+
+		if ( '' === $image_url ) {
+			return '';
+		}
+
+		$attributes = '';
+
+		foreach ( $attr as $name => $value ) {
+			if ( null === $value || '' === $value ) {
+				continue;
+			}
+
+			$attributes .= sprintf( ' %1$s="%2$s"', esc_attr( $name ), esc_attr( (string) $value ) );
+		}
+
+		return sprintf( '<img src="%1$s"%2$s>', esc_url( $image_url ), $attributes );
+	}
+}
 
 if ( ! function_exists( 'lvl_neva_parse_video_time_to_seconds' ) ) {
 	function lvl_neva_parse_video_time_to_seconds( $value ) {

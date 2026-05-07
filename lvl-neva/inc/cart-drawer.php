@@ -54,6 +54,74 @@ if ( ! function_exists( 'lvl_neva_get_cart_drawer_response_data' ) ) {
 	}
 }
 
+if ( ! function_exists( 'lvl_neva_handle_add_product_to_cart_ajax' ) ) {
+	function lvl_neva_handle_add_product_to_cart_ajax() {
+		if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'Корзина сейчас недоступна. Попробуйте ещё раз.', 'lvl-neva' ),
+				),
+				500
+			);
+		}
+
+		$request_data = wp_unslash( $_POST );
+		$product_id   = isset( $request_data['product_id'] ) ? absint( $request_data['product_id'] ) : 0;
+
+		if ( ! $product_id && isset( $request_data['add-to-cart'] ) ) {
+			$product_id = absint( $request_data['add-to-cart'] );
+		}
+
+		$variation_id = isset( $request_data['variation_id'] ) ? absint( $request_data['variation_id'] ) : 0;
+		$quantity     = isset( $request_data['quantity'] ) ? max( 1, (int) $request_data['quantity'] ) : 1;
+		$variation    = array();
+
+		foreach ( $request_data as $key => $value ) {
+			$key = (string) $key;
+
+			if ( 0 !== strpos( $key, 'attribute_' ) ) {
+				continue;
+			}
+
+			$variation[ sanitize_key( $key ) ] = wc_clean( $value );
+		}
+
+		if ( ! $product_id ) {
+			wp_send_json_error(
+				array(
+					'message' => __( 'Не удалось определить товар для добавления в корзину.', 'lvl-neva' ),
+				),
+				400
+			);
+		}
+
+		$added = WC()->cart->add_to_cart( $product_id, $quantity, $variation_id, $variation );
+
+		if ( ! $added ) {
+			wp_send_json_error(
+				array(
+					'message'     => __( 'Не удалось добавить товар в корзину.', 'lvl-neva' ),
+					'product_url' => get_permalink( $product_id ),
+				),
+				400
+			);
+		}
+
+		wp_send_json_success(
+			array_merge(
+				lvl_neva_get_cart_drawer_response_data(),
+				array(
+					'cart_hash'    => WC()->cart->get_cart_hash(),
+					'product_id'   => $product_id,
+					'variation_id' => $variation_id,
+				)
+			)
+		);
+	}
+}
+add_action( 'wp_ajax_lvl_neva_add_product_to_cart', 'lvl_neva_handle_add_product_to_cart_ajax' );
+add_action( 'wp_ajax_nopriv_lvl_neva_add_product_to_cart', 'lvl_neva_handle_add_product_to_cart_ajax' );
+
 if ( ! function_exists( 'lvl_neva_get_cart_drawer_checkout_prefill' ) ) {
 	function lvl_neva_get_cart_drawer_checkout_prefill() {
 		$values = array(

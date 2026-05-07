@@ -439,6 +439,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  document.addEventListener("lvlNevaCartUpdated", (event) => {
+    const payload = event.detail || {};
+
+    if (typeof payload.html === "string") {
+      content.innerHTML = payload.html;
+    }
+
+    if (Object.prototype.hasOwnProperty.call(payload, "count")) {
+      syncCount(payload.count);
+    }
+  });
+
   syncCount(config.initialCount);
 
   if (window.jQuery) {

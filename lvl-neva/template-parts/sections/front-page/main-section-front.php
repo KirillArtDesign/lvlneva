@@ -6,6 +6,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 $hero_image               = get_field( 'main_izobrazhenie_bloka' );
 $hero_title               = get_field( 'main_zagolovok' );
 $hero_description         = get_field( 'main_opisanie' );
+$shop_archive_url         = function_exists( 'lvl_neva_get_shop_archive_url' ) ? lvl_neva_get_shop_archive_url() : home_url( '/' );
+$services_archive_url     = function_exists( 'lvl_neva_get_archive_url_for_post_type' ) ? lvl_neva_get_archive_url_for_post_type( 'services' ) : home_url( '/' );
+$hero_image_html          = lvl_neva_get_field_image_html(
+	$hero_image,
+	'large',
+	array(
+		'alt'           => is_array( $hero_image ) && ! empty( $hero_image['alt'] ) ? $hero_image['alt'] : '',
+		'class'         => 'image__img',
+		'loading'       => 'eager',
+		'fetchpriority' => 'high',
+		'decoding'      => 'async',
+		'sizes'         => '100vw',
+	)
+);
 $allowed_title_html_tags = array(
 	'br' => array(),
 );
@@ -14,16 +28,8 @@ $allowed_title_html_tags = array(
 <section class="section section-cover" section-dark-theme="">
 	<div class="div page-cover_component size-full-screen flex-direction-vertical">
 		<div class="div layer-center div--u-i0rlqbii2">
-			<div class="embed size-full-percentage ">
-				<picture>
-					<!-- Мобильные (до 479px) -->
-					<source media="(max-width: 479px)" srcset="<?php echo esc_url( $hero_image['url'] ); ?>" />
-					<!-- Планшеты (480-991px) -->
-					<source media="(max-width: 991px)" srcset="<?php echo esc_url( $hero_image['url'] ); ?>" />
-					<!-- Десктоп (992px+) -->
-					<source media="(min-width: 992px)" srcset="<?php echo esc_url( $hero_image['url'] ); ?>" />
-					<img alt="<?php echo esc_attr( $hero_image['alt'] ); ?>" loading="lazy" src="<?php echo esc_url( $hero_image['url'] ); ?>" />
-				</picture>
+			<div class="embed size-full-percentage">
+				<?php echo $hero_image_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 
 		</div>
@@ -44,7 +50,7 @@ $allowed_title_html_tags = array(
 						<div class="div flex-direction-horizontal page-cover_gap-xsmall div--u-iht1cbxm4"
 						 max-width="100">
 
-							<button class="hero-corner-roll-btn" type="button" data-menu-trigger="equipment">
+							<a class="hero-corner-roll-btn" href="<?php echo esc_url( $shop_archive_url ); ?>">
 								<span class="hero-corner-roll-btn__label" data-label="Каталог">
 									<span class="hero-corner-roll-btn__label-text">Каталог</span>
 								</span>
@@ -66,9 +72,9 @@ $allowed_title_html_tags = array(
 										</svg>
 									</span>
 								</span>
-							</button>
+							</a>
 
-							<button class="hero-corner-roll-btn" type="button" data-menu-trigger="equipment">
+							<a class="hero-corner-roll-btn" href="<?php echo esc_url( $services_archive_url ); ?>">
 								<span class="hero-corner-roll-btn__label" data-label="Услуги">
 									<span class="hero-corner-roll-btn__label-text">Услуги</span>
 								</span>
@@ -90,7 +96,7 @@ $allowed_title_html_tags = array(
 										</svg>
 									</span>
 								</span>
-							</button>
+							</a>
 
 						</div>
 					</div>

@@ -80,6 +80,8 @@ if ( ! $product_slider_query instanceof WP_Query || ! $product_slider_query->hav
 if ( ! $product_slider_query->have_posts() ) {
 	return;
 }
+
+$product_slider_slide_index = 0;
 ?>
 <section class="section section-full-screen section-equipments section--u-irwudmunb">
 	<div class="div padding-global size-height-auto-tablet section-equipments_padding section-full-screen">
@@ -104,9 +106,13 @@ if ( ! $product_slider_query->have_posts() ) {
 								'template-parts/cards/product-slider-card',
 								null,
 								array(
-									'product' => $product_slider_product,
+									'product'           => $product_slider_product,
+									'slide_index'       => $product_slider_slide_index,
+									'is_priority_slide' => $product_slider_slide_index < 2,
+									'is_first_slide'    => 0 === $product_slider_slide_index,
 								)
 							);
+							$product_slider_slide_index++;
 							?>
 						<?php endwhile; ?>
 					</div>

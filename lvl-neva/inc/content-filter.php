@@ -115,6 +115,8 @@ if ( ! function_exists( 'lvl_neva_get_content_filter_config' ) ) {
 				'post_type'      => '',
 				'taxonomy'       => '',
 				'posts_per_page' => 0,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
 			)
 		);
 
@@ -190,6 +192,8 @@ if ( ! function_exists( 'lvl_neva_get_content_filter_config' ) ) {
 			'post_type'          => $post_type,
 			'taxonomy'           => $taxonomy,
 			'posts_per_page'     => $posts_per_page,
+			'orderby'            => sanitize_key( $args['orderby'] ),
+			'order'              => 'ASC' === strtoupper( (string) $args['order'] ) ? 'ASC' : 'DESC',
 			'terms'              => $terms,
 			'current_term'       => $current_term,
 			'current_term_id'    => $current_term_id,
@@ -235,8 +239,8 @@ if ( ! function_exists( 'lvl_neva_get_content_filter_query' ) ) {
 			'posts_per_page'      => (int) $config['posts_per_page'],
 			'paged'               => max( 1, (int) $paged ),
 			'ignore_sticky_posts' => 'post' === $config['post_type'],
-			'orderby'             => 'date',
-			'order'               => 'DESC',
+			'orderby'             => ! empty( $config['orderby'] ) ? $config['orderby'] : 'date',
+			'order'               => ! empty( $config['order'] ) ? $config['order'] : 'DESC',
 		);
 
 		if ( $term_id > 0 ) {

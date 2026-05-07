@@ -23,13 +23,22 @@ $portfolio_characteristics = is_array($portfolio_characteristics) ? $portfolio_c
                             <div class="div swiper-wrapper flex-direction-horizontal" id="izf9dxyzp_0"
                                 aria-live="polite">
                                 <?php foreach ($portfolio_gallery as $gallery_image): ?>
+                                    <?php
+                                    $gallery_preview_html = lvl_neva_get_field_image_html(
+                                        $gallery_image,
+                                        'large',
+                                        array(
+                                            'class'    => 'image__img',
+                                            'loading'  => 'lazy',
+                                            'decoding' => 'async',
+                                            'sizes'    => '(max-width: 767px) 100vw, (max-width: 991px) 60vw, 55vw',
+                                        )
+                                    );
+                                    ?>
                                     <div class="div swiper-slide">
                                         <div class="div equipment-page_slider_img-wrapper">
                                             <div class="image size-full-percentage">
-                                                <img src="<?php echo esc_url($gallery_image['url']); ?>"
-                                                    alt="<?php echo esc_attr($gallery_image['alt']); ?>"
-                                                    title="<?php echo esc_attr($gallery_image['title']); ?>"
-                                                    class="image__img">
+                                                <?php echo $gallery_preview_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                                             </div>
                                         </div>
                                     </div>
@@ -132,13 +141,23 @@ $portfolio_characteristics = is_array($portfolio_characteristics) ? $portfolio_c
                         <div class="div flex-direction-horizontal flex-center size-width-auto equipment-page_thumbs-gap"
                            >
                             <?php foreach ($portfolio_gallery as $gallery_index => $gallery_image): ?>
+                                <?php
+                                $gallery_thumb_html = lvl_neva_get_field_image_html(
+                                    $gallery_image,
+                                    'thumbnail',
+                                    array(
+                                        'class'    => 'image__img',
+                                        'loading'  => 'lazy',
+                                        'decoding' => 'async',
+                                        'sizes'    => '10rem',
+                                    )
+                                );
+                                ?>
                                 <div role="button"
                                     class="link-block equipment-page_slider_thumb<?php echo 0 === $gallery_index ? ' active' : ''; ?>"
                                     data-index="<?php echo esc_attr($gallery_index); ?>">
                                     <div class="image size-full-percentage">
-                                        <img src="<?php echo esc_url($gallery_image['url']); ?>"
-                                            alt="<?php echo esc_attr($gallery_image['alt']); ?>"
-                                            title="<?php echo esc_attr($gallery_image['title']); ?>" class="image__img">
+                                        <?php echo $gallery_thumb_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                                     </div>
                                 </div>
                             <?php endforeach; ?>

@@ -19,8 +19,8 @@ $portfolio_excerpt      = get_the_excerpt( $portfolio_post_id );
 $portfolio_content      = get_post_field( 'post_content', $portfolio_post_id );
 $portfolio_description  = '';
 $portfolio_thumbnail_id = get_post_thumbnail_id( $portfolio_post_id );
-$portfolio_image_url    = $portfolio_thumbnail_id ? get_the_post_thumbnail_url( $portfolio_post_id, 'full' ) : '';
 $portfolio_image_alt    = $portfolio_thumbnail_id ? get_post_meta( $portfolio_thumbnail_id, '_wp_attachment_image_alt', true ) : '';
+$portfolio_image_html   = '';
 
 if ( '' !== trim( $portfolio_excerpt ) ) {
 	$portfolio_description = $portfolio_excerpt;
@@ -40,6 +40,21 @@ if ( '' !== trim( $portfolio_excerpt ) ) {
 
 if ( '' === $portfolio_image_alt ) {
 	$portfolio_image_alt = $portfolio_title;
+}
+
+if ( $portfolio_thumbnail_id ) {
+	$portfolio_image_html = wp_get_attachment_image(
+		$portfolio_thumbnail_id,
+		'large',
+		false,
+		array(
+			'class'    => 'project-case-card__image border-radius',
+			'alt'      => $portfolio_image_alt,
+			'loading'  => 'lazy',
+			'decoding' => 'async',
+			'sizes'    => '(max-width: 767px) 100vw, (max-width: 991px) 50vw, 42vw',
+		)
+	);
 }
 ?>
 
@@ -72,12 +87,8 @@ if ( '' === $portfolio_image_alt ) {
   </div>
 
   <div class="div project-case-card__media">
-    <?php if ( $portfolio_image_url ) : ?>
-    <img
-      class="project-case-card__image border-radius"
-      src="<?php echo esc_url( $portfolio_image_url ); ?>"
-      alt="<?php echo esc_attr( $portfolio_image_alt ); ?>"
-    >
+    <?php if ( $portfolio_image_html ) : ?>
+    <?php echo $portfolio_image_html; ?>
     <?php endif; ?>
   </div>
 </a>

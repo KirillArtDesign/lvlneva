@@ -20,6 +20,16 @@ $service_permalink        = get_permalink( $service_post_id );
 $service_card_description = get_field( 'opisanie_v_kartochke_uslugi', $service_post_id );
 $service_icon             = get_field( 'ikonka_uslugi', $service_post_id );
 $service_index            = isset( $args['service_index'] ) ? (int) $args['service_index'] : ( isset( $wp_query->current_post ) ? $wp_query->current_post + 1 : null );
+$service_icon_html        = lvl_neva_get_field_image_html(
+	$service_icon,
+	'thumbnail',
+	array(
+		'class'    => 'image__img',
+		'loading'  => 'lazy',
+		'decoding' => 'async',
+		'sizes'    => '5.7rem',
+	)
+);
 ?>
 
 <div class="collection__item size-width-full border-radius">
@@ -49,9 +59,8 @@ $service_index            = isset( $args['service_index'] ) ? (int) $args['servi
                         </div>
                         <div class="div icon-card_component">
                             <div class="image icon_full">
-                                <?php if ( ! empty( $service_icon ) ) : ?>
-                                    <img alt="<?php echo esc_attr( $service_icon['alt'] ); ?>" class="image__img" src="<?php echo esc_url( $service_icon['url'] ); ?>"
-                                        title="<?php echo esc_attr( $service_icon['title'] ); ?>" />
+                                <?php if ( $service_icon_html ) : ?>
+                                    <?php echo $service_icon_html; ?>
                                 <?php endif; ?>
                             </div>
                         </div>

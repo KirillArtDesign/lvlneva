@@ -9,6 +9,9 @@ if ( ! $product instanceof WC_Product ) {
 	return;
 }
 
+$is_priority_slide = ! empty( $args['is_priority_slide'] );
+$is_first_slide    = ! empty( $args['is_first_slide'] );
+
 $product_id                     = $product->get_id();
 $product_title                  = $product->get_name();
 $product_permalink              = get_permalink( $product_id );
@@ -18,6 +21,21 @@ $product_description            = wp_trim_words( wp_strip_all_tags( $product_des
 $product_image_id               = $product->get_image_id();
 $product_image_url              = $product_image_id ? wp_get_attachment_image_url( $product_image_id, 'large' ) : '';
 $product_image_alt              = $product_image_id ? get_post_meta( $product_image_id, '_wp_attachment_image_alt', true ) : '';
+$product_image_html             = $product_image_id
+	? wp_get_attachment_image(
+		$product_image_id,
+		'large',
+		false,
+		array(
+			'class'         => 'image__img',
+			'alt'           => $product_image_alt,
+			'loading'       => $is_priority_slide ? 'eager' : 'lazy',
+			'fetchpriority' => $is_first_slide ? 'high' : 'auto',
+			'decoding'      => 'async',
+			'sizes'         => '(max-width: 767px) 100vw, (max-width: 991px) 50vw, 28vw',
+		)
+	)
+	: '';
 $product_price_html             = $product->get_price_html();
 $product_is_purchasable         = $product->is_purchasable() && $product->is_in_stock();
 $variation_attribute_name       = '';
@@ -134,13 +152,13 @@ if ( $product->is_type( 'variable' ) ) {
 			<?php endif; ?>
 
 			<div class="div flex-direction-horizontal grid-4--is-equipment background-white size-height-full">
-				<div class="div equipments-card_img-wrapper flex-center-all" style="position:absolute;height:100%;">
-					<div class="image equipments-card_img size-width-auto size-height-full equipments-card_img--is-main">
-						<?php if ( $product_image_url ) : ?>
-							<img class="image__img" src="<?php echo esc_url( $product_image_url ); ?>" alt="<?php echo esc_attr( $product_image_alt ); ?>">
-						<?php endif; ?>
+					<div class="div equipments-card_img-wrapper flex-center-all" style="position:absolute;height:100%;">
+						<div class="image equipments-card_img size-width-auto size-height-full equipments-card_img--is-main">
+							<?php if ( $product_image_html ) : ?>
+								<?php echo $product_image_html; ?>
+							<?php endif; ?>
+						</div>
 					</div>
-				</div>
 
 				<div class="div padding-block-xlarge">
 					<div class="div flex-direction-vertical size-height-full flex-justify-left">
@@ -220,9 +238,9 @@ if ( $product->is_type( 'variable' ) ) {
 
 							<div class="div equipments-card_spacer"></div>
 
-							<button class="nav-btn text-style-body product-purchase__submit-slider" type="submit" data-product-card-submit data-product-main-submit <?php disabled( ! $product_is_purchasable ); ?>>
-								<span class="nav-btn__label" data-label="Заказать">
-									<span class="nav-btn__label-text">Заказать</span>
+							<button class="nav-btn text-style-body product-purchase__submit-slider" type="submit" data-product-card-submit data-product-main-submit data-default-label="В корзину" data-added-label="В корзине" <?php disabled( ! $product_is_purchasable ); ?>>
+								<span class="nav-btn__label" data-label="В корзину">
+									<span class="nav-btn__label-text">В корзину</span>
 								</span>
 								<span class="nav-btn__icon" aria-hidden="true">
 									<svg class="nav-btn__icon-svg nav-btn__icon-svg--default" fill="none" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

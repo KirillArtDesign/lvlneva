@@ -18,6 +18,20 @@ $product_description       = wp_trim_words( wp_strip_all_tags( $product_descript
 $product_image_id          = $product->get_image_id();
 $product_image_url         = $product_image_id ? wp_get_attachment_image_url( $product_image_id, 'large' ) : '';
 $product_image_alt         = $product_image_id ? get_post_meta( $product_image_id, '_wp_attachment_image_alt', true ) : '';
+$product_image_html        = $product_image_id
+	? wp_get_attachment_image(
+		$product_image_id,
+		'large',
+		false,
+		array(
+			'class'    => 'image__img equipments-card-adaptive__image',
+			'alt'      => $product_image_alt,
+			'loading'  => 'lazy',
+			'decoding' => 'async',
+			'sizes'    => '(max-width: 767px) 100vw, (max-width: 991px) 44vw, 32vw',
+		)
+	)
+	: '';
 $product_price_html        = $product->get_price_html();
 $product_is_purchasable    = $product->is_purchasable() && $product->is_in_stock();
 $style_attribute           = $product_image_url ? sprintf( '--equipments-card-photo: url(%s);', esc_url( $product_image_url ) ) : '';
@@ -130,7 +144,7 @@ if ( $product->is_type( 'variable' ) ) {
 }
 ?>
 
-<div class="collection__item size-height-auto-tablet " role="group">
+<div class="collection__item size-height-auto-tablet" role="group">
 	<div
 		class="div equipments-card_component background-white border-radius equipments-card-adaptive product-archive-card"
 		data-product-archive-card=""
@@ -151,7 +165,7 @@ if ( $product->is_type( 'variable' ) ) {
 				<input type="hidden" name="<?php echo esc_attr( $variation_attribute_input_name ); ?>" value="<?php echo esc_attr( $selected_option ); ?>" data-product-card-attribute-input>
 			<?php endif; ?>
 
-			<div class="div flex-direction-horizontal background-white equipments-card-adaptive__layout ">
+			<div class="div flex-direction-horizontal background-white equipments-card-adaptive__layout">
 				<div class="div padding-block-xlarge equipments-card-adaptive__content">
 					<div class="div flex-direction-vertical size-height-full equipments-card-adaptive__content-inner">
 						<div class="div flex-direction-vertical equipments-card-adaptive__top">
@@ -200,9 +214,9 @@ if ( $product->is_type( 'variable' ) ) {
 							<?php endif; ?>
 
 							<div class="div product-archive-card__submit-wrap product-archive-card__submit-wrap--mobile">
-								<button class="nav-btn text-style-body product-purchase__submit" type="submit" data-product-card-submit <?php disabled( ! $product_is_purchasable ); ?>>
-									<span class="nav-btn__label" data-label="Заказать">
-										<span class="nav-btn__label-text">Заказать</span>
+								<button class="nav-btn text-style-body product-purchase__submit" type="submit" data-product-card-submit data-default-label="В корзину" data-added-label="В корзине" <?php disabled( ! $product_is_purchasable ); ?>>
+									<span class="nav-btn__label" data-label="В корзину">
+										<span class="nav-btn__label-text">В корзину</span>
 									</span>
 									<span class="nav-btn__icon" aria-hidden="true">
 										<svg class="nav-btn__icon-svg nav-btn__icon-svg--default" fill="none" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -220,16 +234,16 @@ if ( $product->is_type( 'variable' ) ) {
 
 				<div class="div equipments-card-adaptive__media">
 					<div class="equipments-card-adaptive__media-fade"></div>
-					<?php if ( $product_image_url ) : ?>
-						<img class="image__img equipments-card-adaptive__image" src="<?php echo esc_url( $product_image_url ); ?>" alt="<?php echo esc_attr( $product_image_alt ); ?>">
+					<?php if ( $product_image_html ) : ?>
+						<?php echo $product_image_html; ?>
 					<?php endif; ?>
 				</div>
 			</div>
 
 			<div class="product-archive-card__submit-wrap product-archive-card__submit-wrap--desktop">
-				<button class="nav-btn text-style-body product-purchase__submit" type="submit" data-product-card-submit <?php disabled( ! $product_is_purchasable ); ?>>
-					<span class="nav-btn__label" data-label="Заказать">
-						<span class="nav-btn__label-text">Заказать</span>
+				<button class="nav-btn text-style-body product-purchase__submit" type="submit" data-product-card-submit data-default-label="В корзину" data-added-label="В корзине" <?php disabled( ! $product_is_purchasable ); ?>>
+					<span class="nav-btn__label" data-label="В корзину">
+						<span class="nav-btn__label-text">В корзину</span>
 					</span>
 					<span class="nav-btn__icon" aria-hidden="true">
 						<svg class="nav-btn__icon-svg nav-btn__icon-svg--default" fill="none" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

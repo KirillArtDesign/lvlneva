@@ -1,0 +1,108 @@
+* {
+    box-sizing: border-box;
+}
+
+html,body {
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    /* background: white; */
+    overflow-anchor: none;
+    overflow-wrap: break-word;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* comment cause: overrides link styles set in design editor
+a {
+    color: rgb(0, 0, 238);
+    text-decoration: underline;
+}
+a:hover {
+    text-decoration: none;
+}
+*/
+
+a:not([href]) {
+	cursor: default !important;
+}
+
+img { height: auto; max-width: 100%}
+
+.text-block-wrap-div {
+    flex-grow: 1;
+    max-width: 100%;
+}
+
+iframe {
+	max-width: 100%;
+}
+
+.text-block-wrap-div span a { color: inherit; }
+
+select, textarea {
+	max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+[data-block-layout] .root {
+	min-height: auto;
+}
+
+[type=submit],
+button,
+label{
+    cursor: pointer;
+}
+
+.mosaic-wrap {
+	color: #000000;
+}
+
+/* стили для отключения анимации, если пользователь в настройках браузера отключил анимацию. */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* стили для правильной работы анимации с эффектом fade */
+@media (min-width: 992px) {
+	[data-zero-opacity~=screen] {
+		opacity: 0;
+	}
+}		
+@media (min-width: 768px) and (max-width: 991px) {
+	[data-zero-opacity~=tablet-portrait] {
+		opacity: 0;
+	}
+}
+@media (min-width: 480px) and (max-width: 767px) {
+	[data-zero-opacity~=mobile-landscape] {
+		opacity: 0;
+	}
+}
+@media (max-width: 479px) {
+	[data-zero-opacity~=mobile-portrait] {
+		opacity: 0;
+	}
+}
+
+.tt-rich-text p:empty::after {
+  content: '\00A0';
+}

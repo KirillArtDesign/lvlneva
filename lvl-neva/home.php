@@ -1,8 +1,4 @@
 <?php
-/**
- * Template Name: Архив блога
- */
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

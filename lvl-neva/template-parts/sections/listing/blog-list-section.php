@@ -8,6 +8,8 @@ $blog_list_config = lvl_neva_get_content_filter_config(
 		'post_type'      => 'post',
 		'taxonomy'       => 'category',
 		'posts_per_page' => 12,
+		'orderby'        => 'date',
+		'order'          => 'DESC',
 	)
 );
 

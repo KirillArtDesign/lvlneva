@@ -1,0 +1,21 @@
+.lvl-neva-equipment-image-block {
+	max-width: 800px;
+}
+
+.lvl-neva-equipment-image-block .equipment-article__image {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.lvl-neva-equipment-image-block__placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 22rem;
+	padding: 2rem;
+	color: #5f6658;
+	font-size: 1.4rem;
+	text-align: center;
+	background: #e4e8df;
+}

@@ -9,13 +9,16 @@ $production_image       = get_field( 'production_izobrazhenie_v_bloke' );
 $production_video       = get_field( 'production_video_v_bloke' );
 $video_cover_image      = ! empty( $production_video['oblozhka_video'] ) ? $production_video['oblozhka_video'] : null;
 $video_url              = ! empty( $production_video['ssylka_na_video'] ) ? $production_video['ssylka_na_video'] : '';
+$production_image_src   = lvl_neva_get_field_image_url( $production_image, 'large' );
+$production_image_full  = lvl_neva_get_field_image_url( $production_image, 'full' );
+$video_cover_src        = lvl_neva_get_field_image_url( $video_cover_image, 'large' );
 $video_embed_html       = lvl_neva_get_video_embed_html(
 	$video_url,
 	array(
 		'title'  => $production_title ? wp_strip_all_tags( $production_title ) : 'Видео производства',
 		'width'  => 1428,
 		'height' => 803,
-		'poster' => ! empty( $video_cover_image['url'] ) ? $video_cover_image['url'] : '',
+		'poster' => $video_cover_src,
 	)
 );
 $allowed_title_html_tags = array(
@@ -23,14 +26,16 @@ $allowed_title_html_tags = array(
 );
 ?>
 
-<section class="section section-production section-full-screen text-color-white">
-	<div class="div layer-center">
-		<div class="image size-full-percentage ">
-			<?php if ( ! empty( $production_image['url'] ) ) : ?>
+<section class="section section-production section-full-screen text-color-white" style="background: var(--color-black);">
+	<div class="div layer-center" style="opacity: 50%;">
+		<div class="image size-full-percentage">
+			<?php if ( $production_image_src ) : ?>
 				<img alt="<?php echo esc_attr( $production_image['alt'] ); ?>" class="image__img"
-					data-origin-src="<?php echo esc_url( $production_image['url'] ); ?>"
+					data-origin-src="<?php echo esc_url( $production_image_full ? $production_image_full : $production_image_src ); ?>"
 					data-size="<?php echo esc_attr( $production_image['width'] . 'x' . $production_image['height'] ); ?>"
-				 src="<?php echo esc_url( $production_image['url'] ); ?>"
+				 src="<?php echo esc_url( $production_image_src ); ?>"
+				 loading="lazy"
+				 decoding="async"
 					title="<?php echo esc_attr( $production_image['title'] ); ?>" />
 			<?php endif; ?>
 		</div>
@@ -64,10 +69,12 @@ $allowed_title_html_tags = array(
 								<?php echo $video_embed_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 							</div>
 							<div class="image size-full-percentage layer-center image--u-iopk7wa23">
-								<?php if ( ! empty( $video_cover_image['url'] ) ) : ?>
+								<?php if ( $video_cover_src ) : ?>
 									<img alt="<?php echo esc_attr( $video_cover_image['alt'] ); ?>" class="image__img"
 										data-size="<?php echo esc_attr( $video_cover_image['width'] . 'x' . $video_cover_image['height'] ); ?>"
-									 src="<?php echo esc_url( $video_cover_image['url'] ); ?>"
+									 src="<?php echo esc_url( $video_cover_src ); ?>"
+									 loading="lazy"
+									 decoding="async"
 										title="<?php echo esc_attr( $video_cover_image['title'] ); ?>" />
 								<?php endif; ?>
 							</div>
@@ -100,7 +107,7 @@ $allowed_title_html_tags = array(
 							</div>
 						</div>
 					</div>
-					<div class="div ">
+					<div class="div">
 						<div class="card-wrapper border-radius">
 
 							<button

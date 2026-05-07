@@ -15,7 +15,7 @@ $shop_pagination_html = function_exists( 'lvl_neva_render_listing_pagination' )
 
 
 
-<section class="section  section-services-page">
+<section class="section section-services-page">
                         <div class="div padding-global size-height-auto-tablet size-height-full services-page_padding">
                             <div class="div grid-4 services-card_component--height-full grid-4--is-services-layout"
                                
@@ -26,8 +26,8 @@ $shop_pagination_html = function_exists( 'lvl_neva_render_listing_pagination' )
 
  <?php get_template_part( 'template-parts/sections/shop/shop-filter-archive' ); ?>
 
-                                <div class="collection collection--u-i2lj9rvhv " data-shop-filter-results>
-                                    <div role="list" class="collection__list  grid-1 size-height-full " data-shop-list-items>
+                                <div class="collection collection--u-i2lj9rvhv" data-shop-filter-results>
+                                    <div role="list" class="collection__list grid-1 size-height-full" data-shop-list-items>
                                         <!-- карточка услуги -->
 
 								
@@ -41,7 +41,7 @@ $shop_pagination_html = function_exists( 'lvl_neva_render_listing_pagination' )
 					<?php else : ?>
 						<div class="div collection__empty">
 							<div class="text">
-								<span class="text-block-wrap-div text heading-style-h2 ">Товары пока не добавлены</span>
+								<span class="text-block-wrap-div text heading-style-h2">Товары пока не добавлены</span>
 							</div>
 						</div>
 					<?php endif; ?>

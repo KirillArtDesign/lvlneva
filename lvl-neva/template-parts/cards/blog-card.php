@@ -16,11 +16,27 @@ if ( $blog_post instanceof WP_Post ) {
 $blog_permalink    = get_permalink( $blog_post_id );
 $blog_title        = get_the_title( $blog_post_id );
 $blog_thumbnail_id = get_post_thumbnail_id( $blog_post_id );
-$blog_image_url    = $blog_thumbnail_id ? get_the_post_thumbnail_url( $blog_post_id, 'full' ) : '';
 $blog_image_alt    = $blog_thumbnail_id ? get_post_meta( $blog_thumbnail_id, '_wp_attachment_image_alt', true ) : '';
 $blog_image_title  = $blog_thumbnail_id ? get_the_title( $blog_thumbnail_id ) : '';
 $blog_categories   = get_the_category( $blog_post_id );
 $blog_category     = ! empty( $blog_categories ) && ! is_wp_error( $blog_categories ) ? $blog_categories[0]->name : '';
+$blog_image_html   = '';
+
+if ( $blog_thumbnail_id ) {
+	$blog_image_html = wp_get_attachment_image(
+		$blog_thumbnail_id,
+		'large',
+		false,
+		array(
+			'class'    => 'image__img',
+			'alt'      => $blog_image_alt,
+			'title'    => $blog_image_title,
+			'loading'  => 'lazy',
+			'decoding' => 'async',
+			'sizes'    => '(max-width: 479px) 100vw, (max-width: 991px) 50vw, 31.4rem',
+		)
+	);
+}
 ?>
 
 <div role="listitem" class="collection__item size-full-percentage relative border-radius">
@@ -29,9 +45,8 @@ $blog_category     = ! empty( $blog_categories ) && ! is_wp_error( $blog_categor
 		class="link-block news-card_component background-light-grey flex-direction-vertical size-full-percentage news-card_component--catalog">
 
 		<div class="image size-full-percentage relative">
-			<?php if ( $blog_image_url ) : ?>
-				<img src="<?php echo esc_url( $blog_image_url ); ?>" alt="<?php echo esc_attr( $blog_image_alt ); ?>"
-					title="<?php echo esc_attr( $blog_image_title ); ?>" class="image__img">
+			<?php if ( $blog_image_html ) : ?>
+				<?php echo $blog_image_html; ?>
 			<?php endif; ?>
 
 			<div class="div padding-block-small absolute" style="top:0; left:0;">

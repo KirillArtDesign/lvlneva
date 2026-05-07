@@ -541,6 +541,201 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Product card add to cart
+document.addEventListener("DOMContentLoaded", () => {
+  const config = window.lvlNevaCartDrawer || null;
+
+  if (!config?.ajaxUrl || !window.fetch || !window.FormData) {
+    return;
+  }
+
+  const formSelector =
+    ".product-archive-card__form, .product-slider-card__form";
+
+  const submitClassicForm = (form) => {
+    HTMLFormElement.prototype.submit.call(form);
+  };
+
+  const getCurrentCartKey = (form) => {
+    const variationIdInput = form.querySelector('input[name="variation_id"]');
+    const productIdInput = form.querySelector('input[name="product_id"]');
+    const addToCartInput = form.querySelector('input[name="add-to-cart"]');
+
+    return String(
+      variationIdInput?.value ||
+        productIdInput?.value ||
+        addToCartInput?.value ||
+        "",
+    ).trim();
+  };
+
+  const setButtonLabel = (button, labelText) => {
+    const label = button.querySelector(".nav-btn__label");
+    const labelTextNode = button.querySelector(".nav-btn__label-text");
+
+    if (label) {
+      label.dataset.label = labelText;
+    }
+
+    if (labelTextNode) {
+      labelTextNode.textContent = labelText;
+    }
+  };
+
+  const syncInCartState = (form) => {
+    const currentKey = getCurrentCartKey(form);
+    const addedKey = String(form.dataset.inCartProductKey || "").trim();
+    const isInCart = !!currentKey && !!addedKey && currentKey === addedKey;
+    const submitButtons = Array.from(
+      form.querySelectorAll("[data-product-card-submit]"),
+    );
+
+    form.dataset.inCart = isInCart ? "true" : "false";
+
+    submitButtons.forEach((button) => {
+      const nextLabel = isInCart
+        ? button.dataset.addedLabel || "В корзине"
+        : button.dataset.defaultLabel || "В корзину";
+
+      button.classList.toggle("is-in-cart", isInCart);
+      setButtonLabel(button, nextLabel);
+    });
+  };
+
+  const openCartDrawer = () => {
+    const openButton = document.querySelector("[data-cart-drawer-open]");
+
+    if (openButton instanceof HTMLElement) {
+      openButton.click();
+    }
+  };
+
+  document.querySelectorAll(formSelector).forEach((form) => {
+    syncInCartState(form);
+  });
+
+  document.addEventListener("change", (event) => {
+    const option = event.target.closest("[data-product-card-option]");
+
+    if (!option) {
+      return;
+    }
+
+    const form = option.closest(formSelector);
+
+    if (!form) {
+      return;
+    }
+
+    syncInCartState(form);
+  });
+
+  document.addEventListener("submit", (event) => {
+    const form = event.target.closest(formSelector);
+
+    if (!form) {
+      return;
+    }
+
+    if (form.dataset.inCart === "true") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      openCartDrawer();
+      return;
+    }
+
+    if (form.dataset.cartRequestPending === "true") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return;
+    }
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    form.dataset.cartRequestPending = "true";
+
+    const submitButtons = Array.from(
+      form.querySelectorAll("[data-product-card-submit]"),
+    );
+    const initialDisabledStates = submitButtons.map((button) => button.disabled);
+
+    submitButtons.forEach((button) => {
+      button.disabled = true;
+      button.classList.add("is-loading");
+    });
+
+    const formData = new FormData(form);
+    const productId =
+      String(formData.get("product_id") || "").trim() ||
+      String(formData.get("add-to-cart") || "").trim();
+
+    if (productId) {
+      formData.set("product_id", productId);
+    }
+
+    // Do not pass the native Woo form trigger into admin-ajax,
+    // otherwise WooCommerce may add the product once before our custom handler.
+    formData.delete("add-to-cart");
+    formData.append("action", "lvl_neva_add_product_to_cart");
+
+    fetch(config.ajaxUrl, {
+      method: "POST",
+      body: formData,
+      credentials: "same-origin",
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+      .then(async (response) => {
+        let payload = null;
+
+        try {
+          payload = await response.json();
+        } catch (error) {
+          payload = null;
+        }
+
+        return {
+          ok: response.ok,
+          response: payload,
+        };
+      })
+      .then(({ ok, response }) => {
+        if (ok && response?.success && response.data) {
+          form.dataset.inCartProductKey = getCurrentCartKey(form);
+          syncInCartState(form);
+
+          document.dispatchEvent(
+            new CustomEvent("lvlNevaCartUpdated", {
+              detail: response.data,
+            }),
+          );
+
+          return;
+        }
+
+        if (response?.data?.product_url) {
+          window.location.href = response.data.product_url;
+          return;
+        }
+
+        submitClassicForm(form);
+      })
+      .catch(() => {
+        submitClassicForm(form);
+      })
+      .finally(() => {
+        delete form.dataset.cartRequestPending;
+        const isInCart = form.dataset.inCart === "true";
+
+        submitButtons.forEach((button, index) => {
+          button.disabled = isInCart ? false : initialDisabledStates[index] || false;
+          button.classList.remove("is-loading");
+        });
+      });
+  });
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   if (typeof Swiper !== "function") {
     return;

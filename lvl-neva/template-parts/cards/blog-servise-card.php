@@ -18,6 +18,31 @@ $service_permalink        = get_permalink( $service_post_id );
 $service_card_description = get_field( 'opisanie_v_kartochke_uslugi', $service_post_id );
 $service_icon             = get_field( 'ikonka_uslugi', $service_post_id );
 $service_index            = isset( $args['service_index'] ) ? (int) $args['service_index'] : null;
+$service_icon_id          = is_array( $service_icon ) && ! empty( $service_icon['ID'] ) ? (int) $service_icon['ID'] : 0;
+$service_icon_html        = '';
+
+if ( $service_icon_id ) {
+	$service_icon_html = wp_get_attachment_image(
+		$service_icon_id,
+		'thumbnail',
+		false,
+		array(
+			'class'    => 'image__img',
+			'alt'      => $service_icon['alt'] ?? '',
+			'title'    => $service_icon['title'] ?? '',
+			'loading'  => 'lazy',
+			'decoding' => 'async',
+			'sizes'    => '5.7rem',
+		)
+	);
+} elseif ( is_array( $service_icon ) && ! empty( $service_icon['url'] ) ) {
+	$service_icon_html = sprintf(
+		'<img src="%1$s" alt="%2$s" title="%3$s" class="image__img" loading="lazy" decoding="async">',
+		esc_url( $service_icon['sizes']['thumbnail'] ?? $service_icon['url'] ),
+		esc_attr( $service_icon['alt'] ?? '' ),
+		esc_attr( $service_icon['title'] ?? '' )
+	);
+}
 ?>
 
 <a href="<?php echo esc_url( $service_permalink ); ?>" class="div link-block">
@@ -29,13 +54,8 @@ $service_index            = isset( $args['service_index'] ) ? (int) $args['servi
         <div class="div flex-direction-horizontal services-suitable-block__bottom">
             <div class="services-suitable-block__card-text"><?php echo nl2br( esc_html( $service_card_description ) ); ?></div>
             <div class="services-suitable-block__icon" aria-hidden="true">
-                <?php if ( ! empty( $service_icon ) ) : ?>
-                    <img
-                        src="<?php echo esc_url( $service_icon['url'] ); ?>"
-                        alt="<?php echo esc_attr( $service_icon['alt'] ); ?>"
-                        title="<?php echo esc_attr( $service_icon['title'] ); ?>"
-                        class="image__img"
-                    >
+                <?php if ( $service_icon_html ) : ?>
+                    <?php echo $service_icon_html; ?>
                 <?php endif; ?>
             </div>
         </div>

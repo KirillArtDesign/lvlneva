@@ -31,7 +31,7 @@ if ( ! empty( $product_services_ids ) ) {
 }
 ?>
 
-			<div class="div flex-direction-vertical grid-gap size-width-full ">
+			<div class="div flex-direction-vertical grid-gap size-width-full">
 				<div class="div flex-direction-horizontal size-width-full equipment-article">
 					<div class="div flex-direction-vertical size-width-full background-white border-radius padding-block-large equipment-article__card">
 						<div class="div flex-direction-horizontal size-width-full equipment-article__top">

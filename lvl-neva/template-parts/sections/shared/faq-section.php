@@ -26,15 +26,15 @@ if ( empty( $faq_items ) ) {
 $faq_section_id = 'faq-' . get_the_ID();
 ?>
 
-<section class="section  section-services-page background-light-grey">
-	<div class="div padding-global size-height-auto-tablet  services-page_padding">
+<section class="section section-services-page background-light-grey">
+	<div class="div padding-global size-height-auto-tablet services-page_padding">
 		<div class="div grid-4 services-card_component--height-full grid-4--is-services-layout">
 			<h2 gsap-text-scroll-animation=""
-				class="text heading-style-h4 text-color-grey text--u-irj2o420v ">
+				class="text heading-style-h4 text-color-grey text--u-irj2o420v">
 				Ответы на частые вопросы
 			</h2>
-			<div class="collection collection--u-i2lj9rvhv ">
-				<div role="list" class="collection__list grid-1 ">
+			<div class="collection collection--u-i2lj9rvhv">
+				<div role="list" class="collection__list grid-1">
 					<div class="div flex-direction-vertical size-width-full faq-accordion">
 						<div class="div flex-direction-vertical size-width-full faq-accordion__list">
 							<?php foreach ( $faq_items as $faq_index => $faq_item ) : ?>

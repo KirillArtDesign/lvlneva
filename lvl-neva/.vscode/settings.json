@@ -1,0 +1,12 @@
+{
+  "cssFinder.fileExtensions": [
+    ".php"
+  ],
+  "cssFinder.ignoreFolders": [
+    
+    "dist",
+    "build",
+    ".git",
+    "vendor"
+  ]
+}

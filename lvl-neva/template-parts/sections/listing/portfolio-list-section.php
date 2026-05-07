@@ -8,6 +8,8 @@ $portfolio_list_config = lvl_neva_get_content_filter_config(
 		'post_type'      => 'portfolio',
 		'taxonomy'       => 'project-type',
 		'posts_per_page' => 12,
+		'orderby'        => 'date',
+		'order'          => 'DESC',
 	)
 );
 

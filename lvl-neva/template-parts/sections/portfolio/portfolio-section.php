@@ -15,18 +15,18 @@ $portfolio_section_query = new WP_Query(
 $portfolio_archive_url = function_exists( 'lvl_neva_get_archive_url_for_post_type' ) ? lvl_neva_get_archive_url_for_post_type( 'portfolio' ) : '';
 ?>
 
-<section class="section  section-services-page background-light-grey">
-	<div class="div padding-global size-height-auto-tablet  services-page_padding">
+<section class="section section-services-page background-light-grey">
+	<div class="div padding-global size-height-auto-tablet services-page_padding">
 		<div class="div grid-4 services-card_component--height-full grid-4--is-services-layout"
 		>
 			<h2 gsap-text-scroll-animation=""
-				class="text heading-style-h4 text-color-grey text--u-irj2o420v "
+				class="text heading-style-h4 text-color-grey text--u-irj2o420v"
 				>
 				смотрите наши работы
 			</h2>
-			<div class="collection collection--u-i2lj9rvhv ">
+			<div class="collection collection--u-i2lj9rvhv">
 				<div role="list"
-					class="collection__list grid-1 "
+					class="collection__list grid-1"
 					>
 					<?php if ( $portfolio_section_query->have_posts() ) : ?>
 						<?php while ( $portfolio_section_query->have_posts() ) : ?>
